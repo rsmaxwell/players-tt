@@ -1,0 +1,10 @@
+
+@use 'sass:map';
+@use '~@angular/material' as mat;
+
+$color-config:    mat.get-color-config($theme);
+
+.footer {
+  color: white;
+  background-color: lightblue;
+}

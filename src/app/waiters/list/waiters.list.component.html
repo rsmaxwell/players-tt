@@ -1,0 +1,6 @@
+﻿
+<cdk-virtual-scroll-viewport fxFlex="grow" [itemSize]="23" class="waiters-list-listViewport">
+    <div *cdkVirtualFor="let waiter of waiters" (click)="onClick(waiter)" fxLayout="column" class="item-1">
+        <waiter-item [waiter]="waiter" fxLayoutAlign="stretch" class="item-2"></waiter-item>
+    </div>
+</cdk-virtual-scroll-viewport>

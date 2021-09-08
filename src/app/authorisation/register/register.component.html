@@ -1,0 +1,42 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+   <mat-form-field appearance="standard" class="full-width">
+      <mat-label>First Name</mat-label>
+      <input matInput [formControl]="firstname" type="text" required>
+      <mat-error *ngIf="firstname.invalid">{{getFirstNameErrorMessage()}}</mat-error>
+   </mat-form-field>
+
+   <mat-form-field appearance="standard" class="full-width">
+      <mat-label>Last Name</mat-label>
+      <input matInput [formControl]="lastname" type='text' required>
+      <mat-error *ngIf="lastname.invalid">{{getLastNameErrorMessage()}}</mat-error>
+   </mat-form-field>
+
+   <mat-form-field appearance="standard" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput [formControl]="email" type="email" required>
+      <mat-error *ngIf="email.invalid">{{getEmailErrorMessage()}}</mat-error>
+   </mat-form-field>
+
+   <mat-form-field appearance="standard" class="full-width">
+      <mat-label>Known as</mat-label>
+      <input matInput [formControl]="knownas" type="text" required>
+      <mat-error *ngIf="knownas.invalid">{{getKnownAsErrorMessage()}}</mat-error>
+   </mat-form-field>
+
+   <mat-form-field appearance="standard" class="full-width">
+      <mat-label>Password</mat-label>
+      <input matInput [formControl]="password" [type]="hide ? 'password' : 'text'" required>
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+         [attr.aria-pressed]="hide">
+         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      <mat-error *ngIf="password.invalid">{{getPasswordErrorMessage()}}</mat-error>
+   </mat-form-field>
+
+   <mat-card-actions>
+      <button mat-raised-button type="submit" [disabled]="!registerForm.valid" color="primary">Register</button>
+      <button mat-raised-button routerLink="/account/signin">Cancel</button>
+   </mat-card-actions>
+
+</form>

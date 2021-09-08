@@ -1,0 +1,33 @@
+
+<span>
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <!-- <mat-icon svgIcon="players"></mat-icon> -->
+    <img src="../assets/icons/players.svg" class="myimage">    
+  </button>
+
+  <mat-menu #menu="matMenu" [overlapTrigger]="false">
+    <button mat-menu-item>
+      <mat-icon>home</mat-icon>
+      <span>Home</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>people_outline</mat-icon>
+      <span>Connecting</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>videocam</mat-icon>
+      <span>Let's talk</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>exit_to_app</mat-icon>
+      <span>Logout</span>
+    </button>
+  </mat-menu>
+
+</span>
+
+<!-- <mat-icon svgIcon="players"></mat-icon> -->
+
+<!-- <img src="../assets/icons/players.svg" class="myimage"> -->
+
+<span>{{title}}</span>

@@ -1,0 +1,9 @@
+﻿<div *ngFor="let alert of alerts" fxLayout="row wrap" class="{{ cssClass(alert) }}">
+
+    <div fxFlex class="message" [innerHTML]="alert.message" (click)="showDetails(alert)"></div>
+    <!-- <div fxFlex class="message" >Hello</div> -->
+
+    <button fxFlex="nogrow" mat-button (click)="removeAlert(alert)">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>

@@ -1,10 +1,18 @@
 import { Component } from '@angular/core';
+import { MessageService } from './dump/service/message.service';
+import { AlertService } from './_alert';
 
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+@Component({ 
+    selector: 'app', 
+    templateUrl: 'app.component.html',
+    providers: [MessageService],
 })
 export class AppComponent {
-  title = 'players';
+  title = "Players"
+  options = {
+    autoClose: false,
+    keepAfterRouteChange: false
+};
+
+  constructor(public alertService: AlertService) { }
 }

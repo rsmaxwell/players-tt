@@ -1,0 +1,6 @@
+﻿
+<cdk-virtual-scroll-viewport fxFlex="grow" [itemSize]="200" class="courts-list-listViewport">
+    <div *cdkVirtualFor="let court of courts" fxLayout="column" class="courts-list-row-container">
+        <court-row [court]="court" fxLayout="column" fxLayoutAlign="space-around stretch" class="courts-list-row" ></court-row>
+    </div>
+</cdk-virtual-scroll-viewport>
