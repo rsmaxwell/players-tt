@@ -25,6 +25,7 @@ class RegisterResponse {
   providedIn: 'root'
 })
 export class AccountService {
+  public userID!: number;
   public accessToken!: string;
   public refreshDelta!: number;
 
@@ -48,6 +49,11 @@ export class AccountService {
 
   public setRefreshDelta(delta: number) {
     this.refreshDelta = delta;
+  }
+
+  
+  setUserID(id: number) {
+    this.userID = id;
   }
 
   public signout() {

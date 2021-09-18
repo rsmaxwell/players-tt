@@ -1,0 +1,25 @@
+<div fxFlexFill fxLayout="column">
+
+    <mat-toolbar fxFlex="none" fxLayoutAlign="space-between center"color="primary">
+       <fullheader [title]="pagename"></fullheader>
+       <button mat-icon-button (click)="onClick($event)">
+          <mat-icon>add</mat-icon>
+       </button>
+    </mat-toolbar>
+ 
+   <div fxFlex="none">
+     <alerts></alerts>
+   </div>
+
+    <div fxFlex="grow" class="courts-page-list">    
+      <courts-list fxFlex="grow"></courts-list>
+   </div>    
+ 
+    <!-- <div fxFlex="none">
+       <alertbuttons></alertbuttons>
+    </div> -->
+ 
+    <mat-toolbar fxFlex="nogrow" color="primary">
+       <fullfooter></fullfooter>
+    </mat-toolbar>
+ </div>

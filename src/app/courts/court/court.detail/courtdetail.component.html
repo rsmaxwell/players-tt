@@ -1,0 +1,16 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <mat-form-field appearance="standard" class="full-width">
+       <mat-label>Name</mat-label>
+       <input matInput formControlName="name" type="text" required>
+       <mat-error *ngIf="name.invalid">{{getErrorMessage(name)}}</mat-error>
+    </mat-form-field>
+ 
+    <mat-card-actions>
+       <button mat-raised-button type="submit" [disabled]="!form.valid" color="primary">Save</button>
+       <button mat-raised-button type="button" (click)="onCancel()" routerLink="/app/courts">Cancel</button>
+       <div fxFlex></div>
+       <button mat-raised-button type="button" (click)="onDelete()" routerLink="/app/courts" color="warn">Delete</button>
+    </mat-card-actions>
+ 
+ </form>

@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from '@angular/core';
+import { AlertService } from 'src/app/alert/alert/alert.service';
 import { Waiter } from 'src/app/models/waiter';
 import { PlayersService } from 'src/app/service/players.service';
-import { AlertService } from 'src/app/_alert';
 
 @Component({
     selector: 'waiters-list',
@@ -11,11 +11,6 @@ import { AlertService } from 'src/app/_alert';
 export class WaiterListComponent implements OnInit {
 
     waiters: Waiter[] = [];
-
-    options = {
-        autoClose: true,
-        keepAfterRouteChange: false
-    };
 
     constructor(
         public alertService: AlertService,

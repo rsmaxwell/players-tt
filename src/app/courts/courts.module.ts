@@ -3,29 +3,34 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AlertsModule } from 'src/app/_alert';
 import { MyMaterialModule } from '../utilities/mymaterial.module';
 import { HeadersModule } from '../headers/headers.module';
-import { AlertButtonsModule } from '../alertbuttons/alertbuttons.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { CourtsPageComponent } from './page/courts.page';
-import { CourtsListComponent } from './list/courts.list.component';
-import { CourtRowComponent } from './row/court.row.component';
-import { CourtItemComponent } from './item/court.item.component';
-import { CourtHeadingComponent } from './heading/court-heading.component';
-import { PositionComponent } from './position/position.component';
+import { AlertsModule } from '../alert/alerts.module';
 
+import { CourtsPageComponent } from './courts/courts.page/courts.page';
+import { CourtsListComponent } from './courts/courts.list/courts.list.component';
+
+import { CourtPageComponent } from './court/court.page/court-page.component';
+import { CourtItemComponent } from './courts/courts.item/court.item.component';
+import { CourtDetailComponent } from './court/court.detail/courtdetail.component';
+
+import { NewCourtPageComponent } from './new/newcourt.page/newcourt-page.component';
+import { NewCourtComponent } from './new/newcourt.detail/newcourt.component';
 
 
 @NgModule({
   declarations: [
     CourtsPageComponent,
     CourtsListComponent,
-    CourtRowComponent,
+
+    CourtPageComponent,
     CourtItemComponent,
-    CourtHeadingComponent,
-    PositionComponent
+    CourtDetailComponent,
+
+    NewCourtPageComponent,
+    NewCourtComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,18 +41,20 @@ import { PositionComponent } from './position/position.component';
     MyMaterialModule,
     CommonModule,
     AlertsModule,
-    AlertButtonsModule,
     HeadersModule,
     ScrollingModule
 
   ],
   exports: [
     CourtsPageComponent,
-    CourtsListComponent,
-    CourtRowComponent,
+    CourtsListComponent, 
+
+    CourtPageComponent,
     CourtItemComponent,
-    CourtHeadingComponent,
-    PositionComponent
+    CourtDetailComponent,
+
+    NewCourtPageComponent,
+    NewCourtComponent,
   ],
   schemas: [ 
     CUSTOM_ELEMENTS_SCHEMA 

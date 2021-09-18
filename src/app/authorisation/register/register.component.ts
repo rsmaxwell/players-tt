@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { first } from 'rxjs/operators';
 import { AccountService } from 'src/app/account/account.service';
+import { AlertService } from 'src/app/alert/alert/alert.service';
 import { PasswordStrength } from 'src/app/utilities/passwordStrength';
-import { AlertService } from 'src/app/_alert';
 
 @Component({
   selector: 'register',
@@ -17,17 +16,28 @@ export class RegisterComponent {
   hide = true;
 
   firstname = new FormControl('', [
-    Validators.required
+    Validators.required,
+    Validators.minLength(3),
+    Validators.maxLength(20),
   ])
   lastname = new FormControl('', [
-    Validators.required
+    Validators.required,
+    Validators.minLength(3),
+    Validators.maxLength(20),
   ])
   email = new FormControl('', [
     Validators.required,
     Validators.email
   ])
   knownas = new FormControl('', [
-    Validators.required
+    Validators.required,
+    Validators.minLength(2),
+    Validators.maxLength(20),
+  ])
+  phone = new FormControl('', [
+    Validators.required,
+    Validators.pattern("\\+?[0-9 ]*"),
+    Validators.maxLength(20),
   ])
   password = new FormControl('', [
     Validators.required,
@@ -39,6 +49,7 @@ export class RegisterComponent {
     lastname: this.lastname,
     email: this.email,
     knownas: this.knownas,
+    phone: this.phone,
     password: this.password
   });
 
@@ -46,58 +57,38 @@ export class RegisterComponent {
     private route: ActivatedRoute,
     private router: Router,
     private accountService: AccountService,
-    private alertService: AlertService
+    private alertService: AlertService   
   ) { }
 
-  getFirstNameErrorMessage() {
-    if (this.firstname.hasError('required')) {
-      return 'You must enter a value';
+
+  getErrorMessage(formControl: FormControl) {
+    if (formControl.hasError('required')) {
+      return "This field is required";
+    }
+    if (formControl.hasError('minlength')) {
+      let requiredLength = formControl.errors!.minlength.requiredLength     
+      return "The minimum length for this field is " + String(requiredLength) + " characters.";
+    }
+    if (formControl.hasError('maxlength')) {
+      let requiredLength = formControl.errors!.maxlength.requiredLength     
+      return "The maximum length for this field is " + String(requiredLength) + " characters.";
+    }
+    if (formControl.hasError('email')) {     
+      return "Not a valid email address";
+    }
+    if (formControl.hasError('pattern')) {     
+      return "Not a valid phone number";
+    } 
+    if (formControl.hasError('passwordStrength')) {
+      let key = formControl.errors!.passwordStrength
+      return PasswordStrength.getErrorMessage(key)
     }
 
     return '';
-  }
-
-  getLastNameErrorMessage() {
-    if (this.lastname.hasError('required')) {
-      return 'You must enter a value';
-    }
-
-    return '';
-  }
-
-  getEmailErrorMessage() {
-    if (this.email.hasError('required')) {
-      return 'You must enter a value';
-    }
-
-    if (this.email.hasError('email')) {
-      return 'Not a valid email';
-    }
-
-    return '';
-  }
-
-  getKnownAsErrorMessage() {
-    if (this.knownas.hasError('required')) {
-      return 'You must enter a value';
-    }
-
-    return '';
-  }
-
-  getPasswordErrorMessage() {
-    if (this.password.hasError('required')) {
-      return 'You must enter a value';
-    }
-
-    var err = this.password.getError('passwordStrength')
-    if (err != null) {
-      return PasswordStrength.getErrorMessage(err);
-    }
   }
 
   onSubmit(): void {
-    console.log("RegisterComponent.onSubmit(): ");    
+    console.log("RegisterComponent.onSubmit()");
     console.log(this.registerForm.value);
 
     // reset alerts on submit
@@ -111,17 +102,12 @@ export class RegisterComponent {
     this.accountService.register(this.registerForm.value)
       .subscribe(
         response => {
-          console.log("RegisterComponent.onSubmit: response: " + JSON.stringify(response))
-          // get return url from query parameters or default to home page
           const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
           this.router.navigateByUrl(returnUrl);
         },
         error => {
           console.log("RegisterComponent.onSubmit: error: " + JSON.stringify(error))
-          this.alertService.error(error.message);
-        },
-        () => {
-          console.log("RegisterComponent.onSubmit: complete")
+          this.alertService.error(error.error.message);
         }
       );
   }

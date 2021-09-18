@@ -1,4 +1,15 @@
 
+:root {
+    --myprimary: blue; 
+    --myprimary-light: lightblue;
+    --myprimary-very-light: rgb(206, 247, 253);
+
+    --mycontrast: green; 
+    --mycontrast-light: lightgreen;
+    --mycontrast-very-light: rgb(185, 250, 191);
+}
+
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 

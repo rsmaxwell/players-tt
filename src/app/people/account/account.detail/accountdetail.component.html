@@ -1,0 +1,48 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+    <mat-form-field appearance="standard" class="full-width">
+       <mat-label>First Name</mat-label>
+       <input matInput formControlName="firstname" type="text" required>
+       <mat-error *ngIf="firstname.invalid">{{getErrorMessage(firstname)}}</mat-error>
+    </mat-form-field>
+ 
+    <mat-form-field appearance="standard" class="full-width">
+       <mat-label>Last Name</mat-label>
+       <input matInput formControlName="lastname" type='text' required>
+       <mat-error *ngIf="lastname.invalid">{{getErrorMessage(lastname)}}</mat-error>
+    </mat-form-field>
+ 
+    <mat-form-field appearance="standard" class="full-width">
+       <mat-label>Email</mat-label>
+       <input matInput formControlName="email" type="email" required>
+       <mat-error *ngIf="email.invalid">{{getErrorMessage(email)}}</mat-error>
+    </mat-form-field>
+ 
+    <mat-form-field appearance="standard" class="full-width">
+       <mat-label>Known as</mat-label>
+       <input matInput formControlName="knownas" type="text" required>
+       <mat-error *ngIf="knownas.invalid">{{getErrorMessage(knownas)}}</mat-error>
+    </mat-form-field>
+ 
+    <mat-form-field appearance="standard" class="full-width">
+       <mat-label>Phone</mat-label>
+       <input matInput formControlName="phone" type="text" required>
+       <mat-error *ngIf="phone.invalid">{{getErrorMessage(phone)}}</mat-error>
+    </mat-form-field>
+ 
+    <mat-form-field appearance="standard" class="full-width">
+       <mat-label>Status</mat-label>
+       <mat-select formControlName="status" >
+         <mat-option *ngFor="let item of statuses" [value]="item" >
+           {{ item }}
+         </mat-option>
+       </mat-select>
+       <mat-error *ngIf="status.invalid">{{getErrorMessage(status)}}</mat-error>       
+    </mat-form-field>
+ 
+    <mat-card-actions>
+       <button mat-raised-button type="submit" [disabled]="!form.valid" color="primary">Save</button>
+       <button mat-raised-button type="button" (click)="onCancel()" routerLink="/app/people">Cancel</button>
+    </mat-card-actions>
+ 
+ </form>

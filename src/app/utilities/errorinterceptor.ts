@@ -4,7 +4,7 @@ import { Observable, of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AccountService } from '../account/account.service';
 import { Router } from '@angular/router';
-import { AlertService } from '../_alert';
+import { AlertService } from '../alert/alert/alert.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {

@@ -1,0 +1,22 @@
+<div fxFlexFill fxLayout="column">
+
+   <mat-toolbar fxFlex="none" fxLayout="row" fxLayoutAlign="space-between center" color="primary">
+      <fullheader [title]="pagename"></fullheader>
+   </mat-toolbar>
+
+   <div fxFlex="none">
+      <alerts></alerts>
+   </div>
+
+   <div fxFlex="grow" class="newcourt">
+      <newcourt></newcourt>
+   </div>
+
+   <!-- <div fxFlex="none" >
+      <alertbuttons></alertbuttons>
+   </div> -->
+
+   <mat-toolbar fxFlex="nogrow" color="primary">
+      <fullfooter></fullfooter>
+   </mat-toolbar>
+</div>

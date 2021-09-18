@@ -2,9 +2,8 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { first } from 'rxjs/operators';
 import { AccountService } from 'src/app/account/account.service';
-import { AlertService } from 'src/app/_alert';
+import { AlertService } from 'src/app/alert/alert/alert.service';
 
 class RegisterResponse {
   accessToken!: string;
@@ -64,6 +63,7 @@ export class SigninComponent implements AfterViewInit {
         response => {
 
           console.log("SigninComponent.onSubmit: response: " + JSON.stringify(response))
+          this.accountService.setUserID(response.person.id)          
           this.accountService.setAccessToken(response.accessToken)
           this.accountService.setRefreshDelta(response.refreshDelta)
           this.accountService.startRefreshTokenTimer()

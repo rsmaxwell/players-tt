@@ -2,12 +2,16 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { RegisterPage } from './authorisation/register-page/register.page';
 import { SigninPage } from './authorisation/signin-page/signin.page';
-import { CourtsPageComponent } from './courts/page/courts.page';
+import { PlayersPageComponent } from './players/page/players.page';
 import { DumpPageComponent } from './dump/page/dump.page';
-import { PeoplePageComponent } from './people/people.page/people.page';
-import { PersonPageComponent } from './people/person.page/person-page.component';
 import { AuthGuard } from './utilities/auth.guard';
 import { WaitersPageComponent } from './waiters/page/waiters.page';
+import { CourtsPageComponent } from './courts/courts/courts.page/courts.page';
+import { CourtPageComponent } from './courts/court/court.page/court-page.component';
+import { NewCourtPageComponent } from './courts/new/newcourt.page/newcourt-page.component';
+import { PeoplePageComponent } from './people/people/people.page/people.page';
+import { PersonPageComponent } from './people/person/person.page/person-page.component';
+import { AccountPageComponent } from './people/account/account.page/account-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'app/courts', pathMatch: 'full' },
@@ -28,6 +32,15 @@ const routes: Routes = [
     path: 'app',
     children: [
       {
+        path: 'players', canActivate: [AuthGuard],
+        children: [
+          { path: '', component: PlayersPageComponent },
+          { path: ':id', component: PlayersPageComponent },
+          //     { path: 'add', component: CourtComponent },
+          //     { path: 'edit/:id', component: CourteditComponent },
+        ]
+      },
+      {
         path: 'waiters', canActivate: [AuthGuard],
         children: [
           { path: '', component: WaitersPageComponent },
@@ -37,20 +50,28 @@ const routes: Routes = [
         path: 'courts', canActivate: [AuthGuard],
         children: [
           { path: '', component: CourtsPageComponent },
-          { path: ':id', component: CourtsPageComponent },
-          //     { path: 'add', component: CourtComponent },
-          //     { path: 'edit/:id', component: CourteditComponent },
+          { path: ':id', component: CourtPageComponent }
+        ]
+      },
+      {
+        path: 'newcourt', canActivate: [AuthGuard],
+        children: [
+          { path: '', component: NewCourtPageComponent },
         ]
       },
       {
         path: 'people', canActivate: [AuthGuard],
         children: [
           { path: '', component: PeoplePageComponent },
-          { path: ':id', component: PersonPageComponent },
-          //     { path: 'add', component: PersonEditComponent },
-          //     { path: 'edit:id', component: PersonEditComponent },
+          { path: ':id', component: PersonPageComponent }
         ]
       },
+      {
+        path: 'account', canActivate: [AuthGuard],
+        children: [
+          { path: '', component: AccountPageComponent },
+        ]
+      }
     ]
   },
 
