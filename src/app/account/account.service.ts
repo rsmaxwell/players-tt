@@ -1,10 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
-import { Person } from '../models/person';
-import { Register } from '../models/register';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Person } from '../model/person';
+import { Register } from '../model/register';
+import { Observable, Subscription } from 'rxjs';
+import { IMqttMessage, MqttService } from 'ngx-mqtt';
+import { Guid } from "guid-typescript";
 
 class SigninResponse {
   message!: string;
@@ -19,28 +20,55 @@ class RefreshTokenResponse {
 
 class RegisterResponse {
   message!: string;
-} 
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
+  private subscription!: Subscription;
   public userID!: number;
   public accessToken!: string;
   public refreshDelta!: number;
+  public requestTopic = "request"
+  public replyTopic = Guid.create().toString();
 
   constructor(
     private router: Router,
-    private http: HttpClient
-  ) {}
+    private mqtt: MqttService
+  ) { }
 
-  public signin(username: string, password: string): Observable<SigninResponse> {
-    var signinRequest = { signin: { username: username, password: password } }
-    return this.http.post<SigninResponse>(`${environment.apiUrl}/signin`, signinRequest, { withCredentials: true })
+  public signin(username: string, password: string): Observable<IMqttMessage> {
+    console.log("AccountService.signin()");
+
+    let observable: Observable<IMqttMessage> = this.mqtt.observe(this.replyTopic)
+
+    let request = { replyTopic: this.replyTopic, command: "signin", data: { username: username, password: password } }
+    this.mqtt.unsafePublish(this.requestTopic, JSON.stringify(request));
+
+    return observable
   }
 
-  public register(register: Register) {
-    return this.http.post<RegisterResponse>(`${environment.apiUrl}/register`, register);
+  public register(register: Register): Observable<IMqttMessage> {
+    console.log("AccountService.register()");
+
+    let observable: Observable<IMqttMessage> = this.mqtt.observe(this.replyTopic)
+
+    let request = { replyTopic: this.replyTopic, command: "register", data: register }
+    this.mqtt.unsafePublish(this.requestTopic, JSON.stringify(request));
+
+    return observable
+  }
+
+  public refresh(): Observable<IMqttMessage> {
+    console.log("AccountService.refresh()");
+
+    let observable: Observable<IMqttMessage> = this.mqtt.observe(this.replyTopic)
+
+    let request = { replyTopic: this.replyTopic, command: "refresh" }
+    this.mqtt.unsafePublish(this.requestTopic, JSON.stringify(request));
+
+    return observable
   }
 
   public setAccessToken(token: string) {
@@ -51,27 +79,33 @@ export class AccountService {
     this.refreshDelta = delta;
   }
 
-  
-  setUserID(id: number) {
+  public setUserID(id: number) {
     this.userID = id;
   }
 
   public signout() {
+    console.log("AccountService.signout()");
     localStorage.removeItem('user');
     this.accessToken = '';
     this.router.navigate(['/account/signin']);
   }
 
   private refreshToken() {
-    return this.http.post<RefreshTokenResponse>(`${environment.apiUrl}/refresh`, {}, { withCredentials: true })
+    return this.refresh()
       .subscribe(
         response => {
-          this.accessToken = response.accessToken
+          let payload: any = response.payload
+          console.log("AccountService.refreshToken: response: " + payload.toString())          
+          console.log("AccountService.refreshToken: accessToken: " + payload['accessToken'])            
+          this.accessToken = payload.accessToken
           this.startRefreshTokenTimer();
         },
         error => {
           console.log("AccountService.refreshToken(): error: " + JSON.stringify(error)) 
           this.signout()        
+        },
+        () => {
+          console.log("AccountService.refreshToken(): complete")        
         }
       )
   }

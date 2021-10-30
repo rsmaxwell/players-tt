@@ -10,13 +10,22 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { JwtInterceptor } from './utilities/jwtinterceptor';
 import { ErrorInterceptor } from './utilities/errorinterceptor';
-import { AuthorisationModule } from './authorisation/authorisation.module';
-import { PeopleModule } from './people/people.module';
-import { PlayersModule } from './players/players.module';
-import { WaitersModule } from './waiters/waiters.module';
+import { AuthorisationModule } from './mqtthandler/authentication/authorisation.module';
 import { DumpModule } from './dump/dump.module';
-import { CourtsModule } from './courts/courts.module';
 import { AlertsModule } from './alert/alerts.module';
+import { IMqttServiceOptions, MqttModule } from 'ngx-mqtt';
+import { environment } from 'src/environments/environment';
+import { PeopleModule } from './mqtthandler/people/people.module';
+import { PlayersModule } from './mqtthandler/players/players.module';
+import { WaitersModule } from './mqtthandler/waiters/waiters.module';
+import { CourtsModule } from './mqtthandler/courts/courts.module';
+
+const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
+  hostname: environment.mqtt.server,
+  port: environment.mqtt.port,
+  protocol: (environment.mqtt.protocol === "wss") ? "wss" : "ws",
+  path: environment.mqtt.path,
+};
 
 @NgModule({
     imports: [
@@ -25,7 +34,6 @@ import { AlertsModule } from './alert/alerts.module';
         FlexLayoutModule,
         ReactiveFormsModule,
         AppRoutingModule,
-        HttpClientModule,
         ScrollingModule,
         MyMaterialModule,
         DumpModule,
@@ -35,7 +43,9 @@ import { AlertsModule } from './alert/alerts.module';
         PeopleModule,
         PlayersModule,
         WaitersModule,
-        CourtsModule
+        CourtsModule,
+        HttpClientModule,
+        MqttModule.forRoot(MQTT_SERVICE_OPTIONS)
     ],
     declarations: [
         AppComponent

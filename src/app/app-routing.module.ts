@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { RegisterPage } from './authorisation/register-page/register.page';
-import { SigninPage } from './authorisation/signin-page/signin.page';
-import { PlayersPageComponent } from './players/page/players.page';
+import { RegisterPage } from './mqtthandler/authentication/register/register-page/register.page';
+import { SigninPage } from './mqtthandler/authentication/signin/signin-page/signin.page';
 import { DumpPageComponent } from './dump/page/dump.page';
+import { CourtPageComponent } from './mqtthandler/courts/court/court.page/court-page.component';
+import { CourtsPageComponent } from './mqtthandler/courts/courts/courts.page/courts.page';
+import { CreateCourtPageComponent } from './mqtthandler/courts/create/createcourt.page/createcourt-page.component';
+import { AccountPageComponent } from './mqtthandler/people/account/account.page/account-page.component';
+import { PeoplePageComponent } from './mqtthandler/people/people/people.page/people.page';
+import { PersonPageComponent } from './mqtthandler/people/person/person.page/person-page.component';
+import { PlayersPageComponent } from './mqtthandler/players/page/players.page';
+import { WaitersPageComponent } from './mqtthandler/waiters/page/waiters.page';
 import { AuthGuard } from './utilities/auth.guard';
-import { WaitersPageComponent } from './waiters/page/waiters.page';
-import { CourtsPageComponent } from './courts/courts/courts.page/courts.page';
-import { CourtPageComponent } from './courts/court/court.page/court-page.component';
-import { NewCourtPageComponent } from './courts/new/newcourt.page/newcourt-page.component';
-import { PeoplePageComponent } from './people/people/people.page/people.page';
-import { PersonPageComponent } from './people/person/person.page/person-page.component';
-import { AccountPageComponent } from './people/account/account.page/account-page.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'app/courts', pathMatch: 'full' },
@@ -56,7 +56,7 @@ const routes: Routes = [
       {
         path: 'newcourt', canActivate: [AuthGuard],
         children: [
-          { path: '', component: NewCourtPageComponent },
+          { path: '', component: CreateCourtPageComponent },
         ]
       },
       {
