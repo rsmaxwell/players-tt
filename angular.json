@@ -3,7 +3,7 @@
 	"version": 1,
 	"newProjectRoot": "projects",
 	"projects": {
-		"players": {
+		"players-tt": {
 			"projectType": "application",
 			"schematics": {
 				"@schematics/angular:application": {
@@ -20,7 +20,7 @@
 				"build": {
 					"builder": "@angular-devkit/build-angular:browser",
 					"options": {
-						"outputPath": "dist/players",
+						"outputPath": "dist/players-tt",
 						"index": "src/index.html",
 						"main": "src/main.ts",
 						"polyfills": "src/polyfills.ts",
@@ -44,8 +44,8 @@
 							"budgets": [
 								{
 									"type": "initial",
-									"maximumWarning": "500kb",
-									"maximumError": "1mb"
+									"maximumWarning": "4mb",
+									"maximumError": "5mb"
 								},
 								{
 									"type": "anyComponentStyle",
@@ -76,10 +76,10 @@
 					"builder": "@angular-devkit/build-angular:dev-server",
 					"configurations": {
 						"production": {
-							"browserTarget": "players:build:production"
+							"browserTarget": "players-tt-tt:build:production"
 						},
 						"development": {
-							"browserTarget": "players:build:development"
+							"browserTarget": "players-tt:build:development"
 						}
 					},
 					"defaultConfiguration": "development"
@@ -87,7 +87,7 @@
 				"extract-i18n": {
 					"builder": "@angular-devkit/build-angular:extract-i18n",
 					"options": {
-						"browserTarget": "players:build"
+						"browserTarget": "players-tt:build"
 					}
 				},
 				"test": {
@@ -111,5 +111,5 @@
 			}
 		}
 	},
-	"defaultProject": "players"
+	"defaultProject": "players-tt"
 }

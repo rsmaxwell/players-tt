@@ -1,8 +1,8 @@
 
 
 
-ng new players
-cd players
+ng new players-tt
+cd players-tt
 ng add @angular/material
 npm install @angular/cdk
 npm install @angular/flex-layout
