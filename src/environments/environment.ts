@@ -1,8 +1,8 @@
 export const environment = {
-  production: getenv<boolean>("production", false),
-  apiUrl: getenv<string>("apiUrl", "default"),
+  production: getenv<boolean>("production", true),
+  apiUrl: getenv<string>("apiUrl", "http://localhost:4201/players-api"),
   mqtt: {
-    server: getenv<string>("mqtt_server", "default"),
+    server: getenv<string>("mqtt_server", "localhost"),
     protocol: getenv<string>("mqtt_protocol", "ws"),
     port: getenv<number>("mqtt_port", 9001),
     path: getenv<string>("mqtt_path", ""),
