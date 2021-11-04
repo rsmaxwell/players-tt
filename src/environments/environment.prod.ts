@@ -1,6 +1,5 @@
 export const environment = {
   production: getenv<boolean>("production", true),
-  apiUrl: getenv<string>("apiUrl", "http://localhost:4201/players-api"),
   mqtt: {
     server: getenv<string>("mqtt_server", "localhost"),
     protocol: getenv<string>("mqtt_protocol", "ws"),

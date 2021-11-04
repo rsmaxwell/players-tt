@@ -2,9 +2,7 @@
     window["env"] = window["env"] || {};
   
     // Environment variables
-    window["env"]["apiUrl"] = "${API_URL}";
-    window["env"]["production"] = "${PRODUCTION}";
-    window["env"]["debug"] = "${DEBUG}";    
+    window["env"]["production"] = "${PRODUCTION}";   
 
     window["env"]["mqtt_server"] = "${MQTT_SERVER}";
     window["env"]["mqtt_protocol"] = "${MQTT_PROTOCOL}";

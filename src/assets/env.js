@@ -2,9 +2,7 @@
     window["env"] = window["env"] || {};
   
     // Environment variables
-    window["env"]["apiUrl"] = "http://localhost:4201/players-api";
-    window["env"]["production"] = true;
-    window["env"]["debug"] = true;    
+    window["env"]["production"] = false;   
 
     window["env"]["mqtt_server"] = "localhost";
     window["env"]["mqtt_protocol"] = "ws";
