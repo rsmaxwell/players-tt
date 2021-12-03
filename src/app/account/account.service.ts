@@ -65,7 +65,7 @@ export class AccountService {
 
     let observable: Observable<IMqttMessage> = this.mqtt.observe(this.replyTopic)
 
-    let request = { replyTopic: this.replyTopic, command: "refresh" }
+    let request = { replyTopic: this.replyTopic, command: "refreshToken" }
     this.mqtt.unsafePublish(this.requestTopic, JSON.stringify(request));
 
     return observable
@@ -97,10 +97,9 @@ export class AccountService {
           let payload: any = response.payload
 
           if ("status" in payload) {
-            if (payload.status == "200") {
+            if (payload.status == "0") {
               console.log("response.payload.status is OK")
-
-              console.log("AccountService.refreshToken: response: " + payload.toString())          
+              console.log("AccountService.refreshToken: payload: " + JSON.stringify(payload))          
               console.log("AccountService.refreshToken: accessToken: " + payload['accessToken'])            
               this.accessToken = payload.accessToken
               this.startRefreshTokenTimer();              
@@ -110,11 +109,11 @@ export class AccountService {
             }
           } else {
             console.log("response.payload does not contain 'status'")
-            console.log("AccountService.refreshToken(): error: " + JSON.stringify(payload)) 
+            console.log("AccountService.refreshToken(): payload: " + JSON.stringify(payload)) 
           }
         },
         error => {
-          console.log("AccountService.refreshToken(): error: " + JSON.stringify(error)) 
+          console.log("AccountService.refreshToken(): payload: " + JSON.stringify(error)) 
           this.signout()        
         },
         () => {
