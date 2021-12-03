@@ -95,10 +95,23 @@ export class AccountService {
       .subscribe(
         response => {
           let payload: any = response.payload
-          console.log("AccountService.refreshToken: response: " + payload.toString())          
-          console.log("AccountService.refreshToken: accessToken: " + payload['accessToken'])            
-          this.accessToken = payload.accessToken
-          this.startRefreshTokenTimer();
+
+          if ("status" in payload) {
+            if (payload.status == "200") {
+              console.log("response.payload.status is OK")
+
+              console.log("AccountService.refreshToken: response: " + payload.toString())          
+              console.log("AccountService.refreshToken: accessToken: " + payload['accessToken'])            
+              this.accessToken = payload.accessToken
+              this.startRefreshTokenTimer();              
+            } else {
+              console.log("response.payload.status is " + payload.status)
+              console.log("AccountService.refreshToken(): error: " + JSON.stringify(payload)) 
+            }
+          } else {
+            console.log("response.payload does not contain 'status'")
+            console.log("AccountService.refreshToken(): error: " + JSON.stringify(payload)) 
+          }
         },
         error => {
           console.log("AccountService.refreshToken(): error: " + JSON.stringify(error)) 
