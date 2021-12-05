@@ -29,6 +29,7 @@ export class AccountService {
   private subscription!: Subscription;
   public userID!: number;
   public accessToken!: string;
+  public refreshToken!: string;
   public refreshDelta!: number;
   public requestTopic = "request"
   public replyTopic = Guid.create().toString();
@@ -60,29 +61,6 @@ export class AccountService {
     return observable
   }
 
-  public refresh(): Observable<IMqttMessage> {
-    console.log("AccountService.refresh()");
-
-    let observable: Observable<IMqttMessage> = this.mqtt.observe(this.replyTopic)
-
-    let request = { replyTopic: this.replyTopic, command: "refreshToken" }
-    this.mqtt.unsafePublish(this.requestTopic, JSON.stringify(request));
-
-    return observable
-  }
-
-  public setAccessToken(token: string) {
-    this.accessToken = token;
-  }
-
-  public setRefreshDelta(delta: number) {
-    this.refreshDelta = delta;
-  }
-
-  public setUserID(id: number) {
-    this.userID = id;
-  }
-
   public signout() {
     console.log("AccountService.signout()");
     localStorage.removeItem('user');
@@ -90,18 +68,32 @@ export class AccountService {
     this.router.navigate(['/account/signin']);
   }
 
-  private refreshToken() {
+  public refresh(): Observable<IMqttMessage> {
+    console.log("AccountService.refresh()");
+
+    let observable: Observable<IMqttMessage> = this.mqtt.observe(this.replyTopic)
+
+    let request = { replyTopic: this.replyTopic, command: "refreshToken", data: { accessToken: this.accessToken, refreshToken: this.refreshToken } }
+    
+    console.log("AccountService.refresh: request: " + JSON.stringify(request))
+
+    this.mqtt.unsafePublish(this.requestTopic, JSON.stringify(request));
+
+    return observable
+  }
+
+  private refreshAccessToken() {
     return this.refresh()
       .subscribe(
         response => {
-          let payload: any = response.payload
+          let payload: any = JSON.parse(response.payload.toString())
 
           if ("status" in payload) {
             if (payload.status == "0") {
-              console.log("response.payload.status is OK")
-              console.log("AccountService.refreshToken: payload: " + JSON.stringify(payload))          
-              console.log("AccountService.refreshToken: accessToken: " + payload['accessToken'])            
-              this.accessToken = payload.accessToken
+              console.log("AccountService.refreshAccessToken: response.payload.status is OK")
+              console.log("AccountService.refreshAccessToken: payload: " + JSON.stringify(payload))
+              console.log("AccountService.refreshAccessToken: accessToken: " + payload['accessToken']) 
+              this.accessToken = payload.accessToken             
               this.startRefreshTokenTimer();              
             } else {
               console.log("response.payload.status is " + payload.status)
@@ -134,9 +126,12 @@ export class AccountService {
     }
     else {
       console.log("AccountService.startRefreshTokenTimer(): timeout: " + timeout / 1000 + " seconds")
+
+      window.clearTimeout(this.timerID)
+
       this.timerID = window.setTimeout(
         () => {
-          this.refreshToken()
+          this.refreshAccessToken()
         }, timeout);
     }
   }
