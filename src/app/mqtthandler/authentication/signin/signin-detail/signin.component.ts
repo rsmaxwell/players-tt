@@ -56,20 +56,27 @@ export class SigninComponent implements OnDestroy {
     this.subscription = this.accountService.signin(email, password)
       .subscribe(
         response => {
-          let payload: any = JSON.parse(response.payload.toString())
           console.log("SigninComponent.onSubmit: response: " + response.payload.toString())
-          console.log("SigninComponent.onSubmit: id:           " + payload.id)
-          console.log("SigninComponent.onSubmit: accessToken:  " + payload.accessToken)
-          console.log("SigninComponent.onSubmit: refreshToken: " + payload.refreshToken)
-          console.log("SigninComponent.onSubmit: refreshDelta: " + payload.refreshDelta)
-          this.accountService.userID = payload.id
-          this.accountService.accessToken = payload.accessToken
-          this.accountService.refreshToken = payload.refreshToken
-          this.accountService.refreshDelta = payload.refreshDelta
-          this.accountService.startRefreshTokenTimer()
-          
-          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-          this.router.navigateByUrl(returnUrl);
+
+          let payload: any = JSON.parse(response.payload.toString())
+          if (payload.status == '200') {
+            console.log("SigninComponent.onSubmit: id:           " + payload.id)
+            console.log("SigninComponent.onSubmit: accessToken:  " + payload.accessToken)
+            console.log("SigninComponent.onSubmit: refreshToken: " + payload.refreshToken)
+            console.log("SigninComponent.onSubmit: refreshDelta: " + payload.refreshDelta)
+
+            this.accountService.userID = payload.id
+            this.accountService.accessToken = payload.accessToken
+            this.accountService.refreshToken = payload.refreshToken
+            this.accountService.refreshDelta = payload.refreshDelta
+            this.accountService.startRefreshTokenTimer()
+            
+            const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+            this.router.navigateByUrl(returnUrl);            
+          } else {
+            console.log("SigninComponent.onSubmit: status:       " + payload.status)
+            console.log("SigninComponent.onSubmit: message:      " + payload.message)
+          }
         },
         error => {
           console.log("SigninComponent.onSubmit: error: " + JSON.stringify(error))

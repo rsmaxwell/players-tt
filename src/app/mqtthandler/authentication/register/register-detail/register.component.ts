@@ -105,6 +105,19 @@ export class RegisterComponent implements OnDestroy {
       .subscribe(
         response => {
           console.log("RegisterComponent.onSubmit: register: response: " + response.payload.toString())
+
+          let payload: any = JSON.parse(response.payload.toString())
+          if (payload.status == '200') {
+            console.log("RegisterComponent.onSubmit: Success")
+          } else {
+            
+            console.log("RegisterComponent.onSubmit: Failed")
+            this.alertService.error("Username or password not valid") 
+            console.log("RegisterComponent.onSubmit: status: " + payload.status)
+            console.log("RegisterComponent.onSubmit: message: " + payload.message)
+          }
+
+
           this.router.navigateByUrl("app/people");
         },
         error => {

@@ -117,6 +117,9 @@ export class AccountService {
   private timerID!: number;
 
   public startRefreshTokenTimer() {
+
+    console.log("AccountService.startRefreshTokenTimer(): accessToken: " + this.accessToken)
+
     const jwtToken = JSON.parse(atob(this.accessToken.split('.')[1]));
     const expires = new Date(jwtToken.exp * 1000);
     const timeout = expires.getTime() - Date.now() - (this.refreshDelta * 1000);
