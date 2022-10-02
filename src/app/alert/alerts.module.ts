@@ -19,6 +19,9 @@ import { FormsModule } from '@angular/forms';
         AlertsComponent,
         AlertButtonsComponent
     ],
-    exports: [AlertsComponent]
+    exports: [
+        AlertsComponent,
+        AlertButtonsComponent
+    ]
 })
 export class AlertsModule { }

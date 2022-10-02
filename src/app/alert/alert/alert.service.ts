@@ -14,6 +14,7 @@ export class AlertService {
     }
 
     success(message: string) {
+        console.log("AlertService.success")
         this.publish(new AlertBuilder().message(message).success().build()) 
     }
 

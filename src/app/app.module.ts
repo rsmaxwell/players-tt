@@ -19,6 +19,7 @@ import { PeopleModule } from './mqtthandler/people/people.module';
 import { PlayersModule } from './mqtthandler/players/players.module';
 import { WaitersModule } from './mqtthandler/waiters/waiters.module';
 import { CourtsModule } from './mqtthandler/courts/courts.module';
+import { SettingsModule } from './mqtthandler/settings/settings.module';
 
 const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   hostname: environment.mqtt.server,
@@ -45,6 +46,7 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
         WaitersModule,
         CourtsModule,
         HttpClientModule,
+        SettingsModule,
         MqttModule.forRoot(MQTT_SERVICE_OPTIONS)
     ],
     declarations: [

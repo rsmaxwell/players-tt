@@ -34,6 +34,9 @@ export class AlertsComponent implements OnInit, OnDestroy {
         // subscribe to new alert notifications
         this.alertSubscription = this.alertService.onAlert(this.id)
             .subscribe(alert => {
+                
+                console.log("AlertsComponent.ngOnInit.subscribe --> alert: " + alert.message)
+
                 // clear alerts when an empty alert is received
                 if (!alert.message) {
                     // filter out alerts without 'keepAfterRouteChange' flag
@@ -49,7 +52,9 @@ export class AlertsComponent implements OnInit, OnDestroy {
 
                 // auto close alert if required
                 if (alert.autoClose) {
-                    setTimeout(() => this.removeAlert(alert), 3000);
+                    setTimeout(() =>  
+                        this.removeAlert(alert), 3000);
+                    
                 }
             });
 
@@ -82,15 +87,19 @@ export class AlertsComponent implements OnInit, OnDestroy {
     }
 
     removeAlert(alert: Alert) {
+        console.log("removeAlert")
+
         // check if already removed to prevent error on auto close
         if (!this.alerts.includes(alert)) return;
 
         if (this.fade) {
             // fade out alert
+            console.log("removeAlert: fade out alert")
             this.alerts.find(x => x === alert)!.fade = true;
 
             // remove alert after faded out
             setTimeout(() => {
+                console.log("removeAlert: remove alert after faded out")
                 this.alerts = this.alerts.filter(x => x !== alert);
             }, 250);
         } else {

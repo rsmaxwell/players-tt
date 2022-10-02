@@ -94,8 +94,8 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
                 console.log("AccountDetailComponent.ngOnInit: Error: missing 'status' field in response")
                 this.alertService.error("Unexpected response from server")
               }
-              else if (object.status != 0) {
-                console.log("AccountDetailComponent.ngOnInit: Error: bad status in response")
+              else if (object.status != 200) {
+                console.log("AccountDetailComponent.ngOnInit: Error: bad status in response:" + object.status)
                 this.alertService.error("Unexpected response from server")
               }
               else if (!('person' in object)) {
@@ -149,7 +149,7 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
             console.log("AccountDetailComponent.onSubmit: Error: missing 'status' field in response")
             this.alertService.error("Unexpected response from server")
           }
-          else if (object.status != 0) {
+          else if (object.status != 200) {
             console.log("AccountDetailComponent.onSubmit: Error: bad status in response")
             this.alertService.error("Unexpected response from server")
           }

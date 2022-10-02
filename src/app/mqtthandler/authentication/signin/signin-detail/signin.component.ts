@@ -74,9 +74,13 @@ export class SigninComponent implements OnDestroy {
             const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
             this.router.navigateByUrl(returnUrl);            
           } else {
+            console.log("SigninComponent.onSubmit: Failed")
+            this.alertService.error(payload.message) 
             console.log("SigninComponent.onSubmit: status:       " + payload.status)
             console.log("SigninComponent.onSubmit: message:      " + payload.message)
           }
+
+          this.ngOnDestroy()
         },
         error => {
           console.log("SigninComponent.onSubmit: error: " + JSON.stringify(error))

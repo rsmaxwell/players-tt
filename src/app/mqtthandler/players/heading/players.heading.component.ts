@@ -53,7 +53,7 @@ export class PlayersHeadingComponent implements OnInit, OnDestroy {
             console.log("PlayersHeadingComponent.onFill(): Error: missing 'status' field in response")
             this.alertService.error("Unexpected response from server")
           }
-          else if (object.status != 0) {
+          else if (object.status != 200) {
             console.log("PlayersHeadingComponent.onFill(): Error: bad status in response")
             this.alertService.error("Unexpected response from server")
           }
@@ -94,7 +94,7 @@ export class PlayersHeadingComponent implements OnInit, OnDestroy {
             console.log("PlayersHeadingComponent.onClear(): Error: missing 'status' field in response")
             this.alertService.error("Unexpected response from server")
           }
-          else if (object.status != 0) {
+          else if (object.status != 200) {
             console.log("PlayersHeadingComponent.onClear(): Error: bad status in response")
             this.alertService.error("Unexpected response from server")
           }

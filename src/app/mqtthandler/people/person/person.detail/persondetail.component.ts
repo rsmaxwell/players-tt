@@ -97,8 +97,8 @@ export class PersonDetailComponent implements OnInit, OnDestroy {
                 console.log("PersonDetailComponent.ngOnInit: Error: missing 'status' field in response")
                 this.alertService.error("Unexpected response from server")
               }
-              else if (object.status != 0) {
-                console.log("PersonDetailComponent.ngOnInit: Error: bad status in response")
+              else if (object.status != 200) {
+                console.log("PersonDetailComponent.ngOnInit: Error: bad status in response" + object.status)
                 this.alertService.error("Unexpected response from server")
               }
               else if (!('person'! in object)) {
@@ -150,7 +150,7 @@ export class PersonDetailComponent implements OnInit, OnDestroy {
             console.log("PersonDetailComponent.ngOnInit: Error: missing 'status' field in response")
             this.alertService.error("Unexpected response from server")
           }
-          else if (object.status != 0) {
+          else if (object.status != 200) {
             console.log("PersonDetailComponent.ngOnInit: Error: bad status in response")
             this.alertService.error("Unexpected response from server")
           }
@@ -202,7 +202,7 @@ export class PersonDetailComponent implements OnInit, OnDestroy {
           console.log("PersonDetailComponent..onDelete(): Error: missing 'status' field in response")
           this.alertService.error("Unexpected response from server")
         }
-        else if (object.status != 0) {
+        else if (object.status != 200) {
           console.log("PersonDetailComponent..onDelete(): Error: bad status in response")
           this.alertService.error("Unexpected response from server")
         }

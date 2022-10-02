@@ -12,6 +12,7 @@ import { PersonPageComponent } from './mqtthandler/people/person/person.page/per
 import { PlayersPageComponent } from './mqtthandler/players/page/players.page';
 import { WaitersPageComponent } from './mqtthandler/waiters/page/waiters.page';
 import { AuthGuard } from './utilities/auth.guard';
+import { SettingsPageComponent } from './mqtthandler/settings/settings.page/settings.page';
 
 const routes: Routes = [
   { path: '', redirectTo: 'app/courts', pathMatch: 'full' },
@@ -70,6 +71,12 @@ const routes: Routes = [
         path: 'account', canActivate: [AuthGuard],
         children: [
           { path: '', component: AccountPageComponent },
+        ]
+      },
+      {
+        path: 'settings', canActivate: [AuthGuard],
+        children: [
+          { path: '', component: SettingsPageComponent },
         ]
       }
     ]

@@ -40,7 +40,7 @@ export class WaiterListComponent implements OnInit {
                         console.log("WaiterListComponent.ngOnInit: Error: missing 'status' field in response")
                         this.alertService.error("Unexpected response from server")
                     }
-                    else if (object.status != 0) {
+                    else if (object.status != 200) {
                         console.log("WaiterListComponent.ngOnInit: Error: bad status in response")
                         this.alertService.error("Unexpected response from server")
                     }
