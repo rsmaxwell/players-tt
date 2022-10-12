@@ -1,5 +1,4 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { Court } from 'src/app/model/court';
 import { Person } from '../model/person';

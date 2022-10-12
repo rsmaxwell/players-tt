@@ -1,0 +1,11 @@
+<div class="position-edit" >
+    <mat-form-field appearance="fill">
+        <mat-select [(value)]="position.personId">
+            <mat-option [value]="position.personId">{{ position.personId.knownas }}</mat-option>
+            <mat-option></mat-option>
+            <mat-option *ngFor="let waiter of waiters" [value]="waiter.personId">
+                {{ waiter.personId.knownas }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>

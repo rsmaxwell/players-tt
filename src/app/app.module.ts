@@ -16,10 +16,12 @@ import { AlertsModule } from './alert/alerts.module';
 import { IMqttServiceOptions, MqttModule } from 'ngx-mqtt';
 import { environment } from 'src/environments/environment';
 import { PeopleModule } from './mqtthandler/people/people.module';
-import { PlayersModule } from './mqtthandler/players/players.module';
 import { WaitersModule } from './mqtthandler/waiters/waiters.module';
 import { CourtsModule } from './mqtthandler/courts/courts.module';
 import { SettingsModule } from './mqtthandler/settings/settings.module';
+import { GameEditModule } from './mqtthandler/game-edit/game-edit.module';
+import { GamesViewModule } from './mqtthandler/games-view/games-view.module';
+import { SharedDataService } from './service/game.service';
 
 const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   hostname: environment.mqtt.server,
@@ -42,11 +44,13 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
         HeadersModule,
         AuthorisationModule,
         PeopleModule,
-        PlayersModule,
+        GamesViewModule,
         WaitersModule,
         CourtsModule,
         HttpClientModule,
         SettingsModule,
+        GameEditModule,
+        GamesViewModule,
         MqttModule.forRoot(MQTT_SERVICE_OPTIONS)
     ],
     declarations: [
@@ -55,6 +59,7 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        SharedDataService
       ],
     bootstrap: [AppComponent]
 })

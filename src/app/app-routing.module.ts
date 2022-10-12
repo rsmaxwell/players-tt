@@ -9,10 +9,11 @@ import { CreateCourtPageComponent } from './mqtthandler/courts/create/createcour
 import { AccountPageComponent } from './mqtthandler/people/account/account.page/account-page.component';
 import { PeoplePageComponent } from './mqtthandler/people/people/people.page/people.page';
 import { PersonPageComponent } from './mqtthandler/people/person/person.page/person-page.component';
-import { PlayersPageComponent } from './mqtthandler/players/page/players.page';
+import { GamesViewPageComponent } from './mqtthandler/games-view/page/page';
 import { WaitersPageComponent } from './mqtthandler/waiters/page/waiters.page';
 import { AuthGuard } from './utilities/auth.guard';
 import { SettingsPageComponent } from './mqtthandler/settings/settings.page/settings.page';
+import { GameEditPageComponent } from './mqtthandler/game-edit/page/page';
 
 const routes: Routes = [
   { path: '', redirectTo: 'app/courts', pathMatch: 'full' },
@@ -33,10 +34,10 @@ const routes: Routes = [
     path: 'app',
     children: [
       {
-        path: 'players', canActivate: [AuthGuard],
+        path: 'games', canActivate: [AuthGuard],
         children: [
-          { path: '', component: PlayersPageComponent },
-          { path: ':id', component: PlayersPageComponent },
+          { path: '', component: GamesViewPageComponent },
+          { path: ':id', component: GamesViewPageComponent },
           //     { path: 'add', component: CourtComponent },
           //     { path: 'edit/:id', component: CourteditComponent },
         ]
@@ -77,6 +78,18 @@ const routes: Routes = [
         path: 'settings', canActivate: [AuthGuard],
         children: [
           { path: '', component: SettingsPageComponent },
+        ]
+      },
+      {
+        path: 'games', canActivate: [AuthGuard],
+        children: [
+          { path: '', component: GamesViewPageComponent },
+        ]
+      },
+      {
+        path: 'game', canActivate: [AuthGuard],
+        children: [
+          { path: '', component: GameEditPageComponent },
         ]
       }
     ]

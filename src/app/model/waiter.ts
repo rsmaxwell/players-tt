@@ -1,6 +1,7 @@
+import { PersonId } from "./personId";
+
 export class Waiter {
-    personID!: string;
-    knownas!: string;
+    personId!: PersonId;
     start!: number;
 
     constructor() { }

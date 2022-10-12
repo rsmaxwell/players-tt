@@ -1,0 +1,22 @@
+<div fxFlexFill fxLayout="column">
+
+   <mat-toolbar fxFlex="none" fxLayout="row" color="primary">
+      <fullheader [title]="pagename"></fullheader>
+   </mat-toolbar>
+
+   <div fxFlex="none">
+      <alerts></alerts>
+   </div>
+
+   <div fxFlex="grow" class="games-page-list">
+      <games-list fxFlex="grow"></games-list>
+   </div>
+
+   <!-- <div fxFlex="none">
+      <alertbuttons></alertbuttons>
+   </div> -->
+
+   <mat-toolbar fxFlex="nogrow" color="primary">
+      <fullfooter></fullfooter>
+   </mat-toolbar>
+</div>

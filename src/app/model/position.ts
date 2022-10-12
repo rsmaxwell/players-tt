@@ -1,7 +1,8 @@
+import { PersonId } from "./personId";
+
 export class Position {
     index!: number;
-    personid!: number;
-    displayname!: string;
+    personId!: PersonId;
 }
 
 

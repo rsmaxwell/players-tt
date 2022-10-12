@@ -1,0 +1,10 @@
+<div class="grid-view-container">
+
+  <mat-grid-list cols="2" rowHeight="fit" class="grid-view" [gutterSize]="'10px'" >
+
+    <mat-grid-tile *ngFor="let position of court.positions" >
+      <position-view [position]="position" [court]="court" ></position-view>
+    </mat-grid-tile>
+
+  </mat-grid-list>
+</div>
