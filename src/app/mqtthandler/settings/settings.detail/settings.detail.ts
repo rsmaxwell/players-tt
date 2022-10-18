@@ -35,7 +35,6 @@ export class SettingsDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     console.log("SettingsDetailComponent.ngOnDestroy()")
-
   }
   
   ngOnInit(): void {

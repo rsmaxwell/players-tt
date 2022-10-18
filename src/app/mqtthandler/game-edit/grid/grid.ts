@@ -1,4 +1,5 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChildren, AfterViewInit, QueryList, Output } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AlertService } from 'src/app/alert/alert/alert.service';
 import { Court } from 'src/app/model/court';
@@ -8,73 +9,74 @@ import { PlayersService } from 'src/app/service/players.service';
 import { PositionEditComponent } from '../position/position';
 
 @Component({
-  selector: 'grid-edit',
-  templateUrl: './grid.html',
-  styleUrls: ['./grid.scss']
+    selector: 'grid-edit',
+    templateUrl: './grid.html',
+    styleUrls: ['./grid.scss']
 })
-export class GridEditComponent implements OnInit {
+export class GridEditComponent implements OnInit, AfterViewInit {
 
-  court!: Court;
+    @ViewChildren(PositionEditComponent) children!: QueryList<PositionEditComponent>;
+    @Input() court!: Court;
+    @Input() dummyForm!: FormGroup;
 
-  selectedMessage:any;
+    subscription!: Subscription
+    waiters: Waiter[] = [];
 
-  subscription!: Subscription
-  waiters: Waiter[] = [];
+    constructor(
+        public alertService: AlertService,
+        private playersService: PlayersService,
+        private sharedDataService: SharedDataService
+    ) {
+        console.log("GridEditComponent.constructor()")
+    }
 
-  constructor(
-    public alertService: AlertService,
-    private playersService: PlayersService,
-    private sharedDataService: SharedDataService
-  ) {
-    console.log("GridEditComponent.constructor()")
-  }
+    ngOnInit(): void {
+        this.subscription = this.playersService.getWaiters()
+            .subscribe(
+                response => {
+                    let payload = response.payload.toString()
+                    let payload2 = payload
+                    if (payload.length > 100) {
+                        payload2 = payload.substring(0, 100) + "..."
+                    }
+                    console.log("GridEditComponent.ngOnInit: response: " + payload2)
+                    let object = JSON.parse(payload)
 
-  ngOnDestroy(): void {
-    console.log("GridEditComponent.ngOnDestroy()")
-    this.subscription.unsubscribe()
-  }
+                    if (!('status' in object)) {
+                        console.log("GridEditComponent.ngOnInit: Error: missing 'status' field in response")
+                        this.alertService.error("Unexpected response from server")
+                    }
+                    else if (object.status != 200) {
+                        console.log("GridEditComponent.ngOnInit: Error: bad status in response")
+                        this.alertService.error("Unexpected response from server")
+                    }
+                    else if (!('listOfWaiters' in object)) {
+                        console.log("GridEditComponent.ngOnInit: Error: missing 'listOfWaiters' field in response")
+                        this.alertService.error("Unexpected response from server")
+                    }
+                    else {
+                        this.waiters = object.listOfWaiters
+                        console.log("GridEditComponent.ngOnInit: ok: waiters = " + JSON.stringify(this.waiters))
 
-  ngOnInit(): void { 
-    this.sharedDataService.currentCourt.subscribe(court => (this.court = court)); //<= Always get current value!    
-    console.log("GridEditComponent.ngOnInit(): court " + JSON.stringify(this.court))
+                        this.subscription.unsubscribe()
+                    }
+                },
+                error => {
+                    console.log("GridEditComponent.ngOnInit: error: " + JSON.stringify(error))
+                    this.alertService.error(error);
+                },
+                () => {
+                    console.log("GridEditComponent.ngOnInit: complete")
+                }
+            );
+    }
 
-    this.subscription = this.playersService.getWaiters()
-    .subscribe(
-        response => {
-            let payload = response.payload.toString()
-            let payload2 = payload
-            if (payload.length > 100) {
-                payload2 = payload.substring(0, 100) + "..."
-            }
-            console.log("GridEditComponent.ngOnInit: response: " + payload2)
-            let object = JSON.parse(payload)
+    ngAfterViewInit() {
+        console.log("GridEditComponent.ngAfterViewInit()")
+    }
 
-            if (!('status' in object)) {
-                console.log("GridEditComponent.ngOnInit: Error: missing 'status' field in response")
-                this.alertService.error("Unexpected response from server")
-            }
-            else if (object.status != 200) {
-                console.log("GridEditComponent.ngOnInit: Error: bad status in response")
-                this.alertService.error("Unexpected response from server")
-            }
-            else if (!('listOfWaiters' in object)) {
-                console.log("GridEditComponent.ngOnInit: Error: missing 'listOfWaiters' field in response")
-                this.alertService.error("Unexpected response from server")
-            }
-            else {
-                this.waiters = object.listOfWaiters
-                console.log("GridEditComponent.ngOnInit: ok: waiters = " + JSON.stringify(this.waiters))
-
-                this.subscription.unsubscribe()
-            }
-        },
-        error => {
-            console.log("GridEditComponent.ngOnInit: error: " + JSON.stringify(error))
-            this.alertService.error(error);
-        },
-        () => {
-            console.log("GridEditComponent.ngOnInit: complete")
-        }
-    );    
-  }
+    ngOnDestroy(): void {
+        console.log("GridEditComponent.ngOnDestroy()")
+        this.subscription.unsubscribe()
+    }
 }

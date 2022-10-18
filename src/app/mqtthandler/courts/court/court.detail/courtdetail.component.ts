@@ -37,7 +37,6 @@ export class CourtDetailComponent implements OnInit, OnDestroy {
     private location: Location
   ) { }
 
-
   ngOnDestroy(): void {
     console.log("CourtDetailComponent.ngOnDestroy()")
     if (this.subscription_getCourt != undefined) {
