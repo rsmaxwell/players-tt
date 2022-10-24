@@ -14,6 +14,8 @@ export class PositionViewComponent implements OnInit {
   @Input() position!: Position;
   @Input() court!: Court;
 
+  displayPosition!: string;
+
   constructor(
     private router: Router,
     private sharedDataService: SharedDataService
@@ -22,8 +24,9 @@ export class PositionViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("PositionViewComponent.ngOnInit()")
     console.log("PositionViewComponent.ngOnInit(): position: " + JSON.stringify(this.position))
+    this.displayPosition = (this.position.personId != null) ? this.position.personId.knownas : ''
+    console.log("PositionViewComponent.ngOnInit(): displayPosition: " + JSON.stringify(this.displayPosition))
   }
   
   onClick() {

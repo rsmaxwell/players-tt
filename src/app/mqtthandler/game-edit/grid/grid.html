@@ -3,7 +3,7 @@
     <mat-grid-list cols="2" rowHeight="fit" class="grid-edit" [gutterSize]="'10px'">
 
         <mat-grid-tile *ngFor="let position of court.positions">
-            <position-edit [position]="position" [court]="court" [waiters]="waiters" [parentForm]="dummyForm"></position-edit>
+            <position-edit [position]="position" [court]="court" [waiters]="waiters" [form]="form"></position-edit>
         </mat-grid-tile>
 
     </mat-grid-list>

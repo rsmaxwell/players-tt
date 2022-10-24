@@ -150,6 +150,24 @@ export class PlayersService implements OnDestroy {
     return observable
   }
 
+  updateGame(id: string, court: Court): Observable<IMqttMessage> {
+    console.log("PlayersService.updateGame()");
+
+    let replyTopic = Guid.create().toString();
+    let observable: Observable<IMqttMessage> = this.mqtt.observe(replyTopic)
+
+    let data: any = court
+    data.accessToken = this.accountService.accessToken
+    data.id = +id
+
+    let request = { replyTopic: replyTopic, command: "updateGame", data: data }
+    console.log("PlayersService.updateGame(): request: " + JSON.stringify(request))
+
+    this.mqtt.unsafePublish(this.requestTopic, JSON.stringify(request));
+
+    return observable
+  }
+
   fillCourt(court: Court): Observable<IMqttMessage> {
     console.log("PlayersService.fillCourt");
     let replyTopic = Guid.create().toString();

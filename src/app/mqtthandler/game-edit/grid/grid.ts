@@ -17,7 +17,7 @@ export class GridEditComponent implements OnInit, AfterViewInit {
 
     @ViewChildren(PositionEditComponent) children!: QueryList<PositionEditComponent>;
     @Input() court!: Court;
-    @Input() dummyForm!: FormGroup;
+    @Input() form!: FormGroup;
 
     subscription!: Subscription
     waiters: Waiter[] = [];
@@ -31,6 +31,8 @@ export class GridEditComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit(): void {
+        console.log("GridEditComponent.ngOnInit(): court: " + JSON.stringify(this.court))
+
         this.subscription = this.playersService.getWaiters()
             .subscribe(
                 response => {
@@ -72,11 +74,13 @@ export class GridEditComponent implements OnInit, AfterViewInit {
     }
 
     ngAfterViewInit() {
-        console.log("GridEditComponent.ngAfterViewInit()")
+        console.log("GridEditComponent.ngAfterViewInit(): form.value: " + JSON.stringify(this.form.value));
     }
 
     ngOnDestroy(): void {
         console.log("GridEditComponent.ngOnDestroy()")
-        this.subscription.unsubscribe()
+        if (this.subscription != null) {
+            this.subscription.unsubscribe()
+        }
     }
 }

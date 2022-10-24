@@ -22,7 +22,7 @@ export class Court {
         for (let i = 0; i < 4; i++) {
           let position = mapOfPositions.get(i)
           if (!position) {
-            position = {index: -1, personId: { id: -1, knownas: ""}}
+            position = {index: i}
           }
           court.positions.push(position)
         }        
