@@ -2,7 +2,8 @@
 
   <mat-grid-list cols="2" rowHeight="fit" class="grid-view" [gutterSize]="'10px'" >
 
-    <mat-grid-tile *ngFor="let position of court.positions" >
+    <mat-grid-tile *ngFor="let position of court.positions" (click)="onClick()">
+      <!-- <button mat-raised-button color="primary" >xxxxx</button> -->
       <position-view [position]="position" [court]="court" ></position-view>
     </mat-grid-tile>
 
