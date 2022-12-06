@@ -2,9 +2,10 @@
 
 set -x 
 
+
 BUILD_DIR=$(pwd)/build
+ng build --prod
+
+
 INFO_DIR=${BUILD_DIR}/info
-
-go build -o ${BUILD_DIR}/ ./...
-
 cp /etc/os-release ${INFO_DIR}/os-release

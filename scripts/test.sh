@@ -10,4 +10,4 @@ cd ${BUILD_DIR}
 pwd
 ls -al 
 
-./players-tt --version
+# ./players-tt --version
