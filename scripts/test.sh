@@ -2,7 +2,7 @@
 
 set -x
 
-echo "testing: players-tt-api"
+echo "testing: players-tt"
 
 BUILD_DIR=./build
 cd ${BUILD_DIR}
@@ -10,4 +10,4 @@ cd ${BUILD_DIR}
 pwd
 ls -al 
 
-./players-tt-api --version
+./players-tt --version
