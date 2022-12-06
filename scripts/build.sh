@@ -8,6 +8,7 @@ INFO_DIR=${BUILD_DIR}/info
 cp /etc/os-release ${INFO_DIR}/os-release
 
 
+rm package.json
 rm package-lock.json
 
 
