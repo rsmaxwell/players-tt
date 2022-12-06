@@ -12,6 +12,15 @@ rm package.json
 rm package-lock.json
 
 
+npm init
+result=$?
+if [ ! ${result} -eq 0 ]; then
+    echo "Error: $0[${LINENO}]"
+    echo "result: ${result}"
+    exit 1
+fi
+
+
 npm install
 result=$?
 if [ ! ${result} -eq 0 ]; then
