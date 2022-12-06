@@ -9,13 +9,8 @@ if [ -z "${BRANCH}" ]; then
     exit 1
 fi
 
-if [ -z "$2" ]; then
-    echo "Missing PLATFORM argument"
-    exit 1
-fi
-PLATFORM="$2"
 
-
+PLATFORM="linux"
 
 
 if [ -z "${BUILD_ID}" ]; then
