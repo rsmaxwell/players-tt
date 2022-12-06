@@ -8,6 +8,9 @@ INFO_DIR=${BUILD_DIR}/info
 cp /etc/os-release ${INFO_DIR}/os-release
 
 
+rm package-lock.json
+
+
 npm install
 result=$?
 if [ ! ${result} -eq 0 ]; then
