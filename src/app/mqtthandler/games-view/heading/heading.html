@@ -1,9 +1,15 @@
-<div fxFlex="16" fxLayoutAlign="center center" class="arrow">
-    <img src="./assets/icons/arrow-fill.png" (click)="onFill(court)" />
-</div>
 
-<div fxFlex fxLayoutAlign="center center">{{court.name}}</div>
+<div fxFlexFill fxLayout="row" fxLayoutAlign="start none">
 
-<div fxFlex="16" fxLayoutAlign="center center" class="arrow">
-    <img src="./assets/icons/arrow-clear.png" (click)="onClear(court)" />
+    <div fxFlex="0" fxLayoutAlign="center center" class="arrow">
+        <img src="./assets/icons/arrow-fill.png" (click)="onFill(court)" />
+    </div>
+
+    <div fxFlex="100" fxLayoutAlign="center center">{{court.name}}
+    </div>
+
+    <div fxFlex="0" fxLayoutAlign="center center" class="arrow">
+        <img src="./assets/icons/arrow-clear.png" (click)="onClear(court)" />
+    </div>
+
 </div>

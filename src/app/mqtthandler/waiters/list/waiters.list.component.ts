@@ -34,23 +34,7 @@ export class WaiterListComponent implements OnInit {
                         payload2 = payload.substring(0, 100) + "..."
                     }
                     console.log("WaiterListComponent.ngOnInit: response: " + payload2)
-                    let object = JSON.parse(payload)
-
-                    if (!('status' in object)) {
-                        console.log("WaiterListComponent.ngOnInit: Error: missing 'status' field in response")
-                        this.alertService.error("Unexpected response from server")
-                    }
-                    else if (object.status != 200) {
-                        console.log("WaiterListComponent.ngOnInit: Error: bad status in response")
-                        this.alertService.error("Unexpected response from server")
-                    }
-                    else if (!('listOfWaiters' in object)) {
-                        console.log("WaiterListComponent.ngOnInit: Error: missing 'listOfWaiters' field in response")
-                        this.alertService.error("Unexpected response from server")
-                    }
-                    else {
-                        this.waiters = object.listOfWaiters
-                    }
+                    this.waiters = JSON.parse(payload)
                 },
                 error => {
                     console.log("WaiterListComponent.ngOnInit: error: " + JSON.stringify(error))

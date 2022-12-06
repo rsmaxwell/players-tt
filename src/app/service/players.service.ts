@@ -223,13 +223,6 @@ export class PlayersService implements OnDestroy {
 
   getWaiters(): Observable<IMqttMessage> {
     console.log("PlayersService.getWaiters()");
-    let replyTopic = Guid.create().toString();
-
-    let observable: Observable<IMqttMessage> = this.mqtt.observe(replyTopic)
-
-    let request = { replyTopic: replyTopic, command: "getWaiters", data: { accessToken: this.accountService.accessToken } }
-    this.mqtt.unsafePublish(this.requestTopic, JSON.stringify(request));
-
-    return observable
+    return this.mqtt.observeRetained("getWaiters")
   }
 }

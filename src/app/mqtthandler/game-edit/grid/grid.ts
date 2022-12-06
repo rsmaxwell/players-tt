@@ -42,26 +42,9 @@ export class GridEditComponent implements OnInit, AfterViewInit {
                         payload2 = payload.substring(0, 100) + "..."
                     }
                     console.log("GridEditComponent.ngOnInit: response: " + payload2)
-                    let object = JSON.parse(payload)
-
-                    if (!('status' in object)) {
-                        console.log("GridEditComponent.ngOnInit: Error: missing 'status' field in response")
-                        this.alertService.error("Unexpected response from server")
-                    }
-                    else if (object.status != 200) {
-                        console.log("GridEditComponent.ngOnInit: Error: bad status in response")
-                        this.alertService.error("Unexpected response from server")
-                    }
-                    else if (!('listOfWaiters' in object)) {
-                        console.log("GridEditComponent.ngOnInit: Error: missing 'listOfWaiters' field in response")
-                        this.alertService.error("Unexpected response from server")
-                    }
-                    else {
-                        this.waiters = object.listOfWaiters
-                        console.log("GridEditComponent.ngOnInit: ok: waiters = " + JSON.stringify(this.waiters))
-
-                        this.subscription.unsubscribe()
-                    }
+                    this.waiters = JSON.parse(payload)
+                    console.log("GridEditComponent.ngOnInit: ok: waiters = " + JSON.stringify(this.waiters))
+                    this.subscription.unsubscribe()
                 },
                 error => {
                     console.log("GridEditComponent.ngOnInit: error: " + JSON.stringify(error))

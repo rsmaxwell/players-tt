@@ -22,6 +22,7 @@ import { SettingsModule } from './mqtthandler/settings/settings.module';
 import { GameEditModule } from './mqtthandler/game-edit/game-edit.module';
 import { GamesViewModule } from './mqtthandler/games-view/games-view.module';
 import { SharedDataService } from './service/game.service';
+import { ViewerModule } from './mqtthandler/viewer/viewer.module';
 
 const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   hostname: environment.mqtt.server,
@@ -51,6 +52,7 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
         SettingsModule,
         GameEditModule,
         GamesViewModule,
+        ViewerModule,
         MqttModule.forRoot(MQTT_SERVICE_OPTIONS)
     ],
     declarations: [

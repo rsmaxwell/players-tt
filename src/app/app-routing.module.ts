@@ -14,9 +14,10 @@ import { WaitersPageComponent } from './mqtthandler/waiters/page/waiters.page';
 import { AuthGuard } from './utilities/auth.guard';
 import { SettingsPageComponent } from './mqtthandler/settings/settings.page/settings.page';
 import { GameEditPageComponent } from './mqtthandler/game-edit/page/page';
+import { Viewer } from './mqtthandler/viewer/viewer/viewer';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'app/courts', pathMatch: 'full' },
+  { path: '', redirectTo: 'app/games', pathMatch: 'full' },
   {
     path: 'error',
     children: [
@@ -28,6 +29,12 @@ const routes: Routes = [
     children: [
       { path: 'signin', component: SigninPage },
       { path: 'register', component: RegisterPage },
+    ]
+  },
+  {
+    path: 'viewer',
+    children: [
+      { path: '', component: Viewer },
     ]
   },
   {
