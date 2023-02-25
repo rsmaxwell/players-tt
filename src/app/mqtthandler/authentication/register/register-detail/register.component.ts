@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AccountService } from 'src/app/account/account.service';
 import { AlertService } from 'src/app/alert/alert/alert.service';
+import { Register } from 'src/app/model/register';
 import { PasswordStrength } from 'src/app/utilities/passwordStrength';
 
 @Component({
@@ -68,11 +69,11 @@ export class RegisterComponent implements OnDestroy {
       return "This field is required";
     }
     if (formControl.hasError('minlength')) {
-      let requiredLength = formControl.errors!.minlength.requiredLength     
+      let requiredLength = formControl.errors!['minlength'].requiredLength     
       return "The minimum length for this field is " + String(requiredLength) + " characters.";
     }
     if (formControl.hasError('maxlength')) {
-      let requiredLength = formControl.errors!.maxlength.requiredLength     
+      let requiredLength = formControl.errors!['maxlength'].requiredLength     
       return "The maximum length for this field is " + String(requiredLength) + " characters.";
     }
     if (formControl.hasError('email')) {     
@@ -82,7 +83,7 @@ export class RegisterComponent implements OnDestroy {
       return "Not a valid phone number";
     } 
     if (formControl.hasError('passwordStrength')) {
-      let key = formControl.errors!.passwordStrength
+      let key = formControl.errors!['passwordStrength']
       return PasswordStrength.getErrorMessage(key)
     }
 
@@ -101,9 +102,10 @@ export class RegisterComponent implements OnDestroy {
       return;
     }
 
-    this.subscription = this.accountService.register(this.form.value)
-      .subscribe(
-        response => {
+    let value: Register = Register.fromFormGroup(this.form)
+    this.subscription = this.accountService.register(value)
+      .subscribe({
+        next: (response: any) => {
           console.log("RegisterComponent.onSubmit: register: response: " + response.payload.toString())
 
           let payload: any = JSON.parse(response.payload.toString())
@@ -112,21 +114,21 @@ export class RegisterComponent implements OnDestroy {
             this.router.navigateByUrl("app/people");
           } else {
             console.log("RegisterComponent.onSubmit: Failed")
-            this.alertService.error(payload.message) 
+            this.alertService.error(payload.message)
             console.log("RegisterComponent.onSubmit: status: " + payload.status)
             console.log("RegisterComponent.onSubmit: message: " + payload.message)
           }
 
           this.ngOnDestroy()
         },
-        error => {
-          console.log("RegisterComponent.onSubmit: register: error: " + JSON.stringify(error))
-          this.alertService.error(error.error.message);
+        error: (err: any) => {
+          console.log("RegisterComponent.onSubmit: register: error: " + JSON.stringify(err))
+          this.alertService.error(err.error.message);
         },
-        () => {
+        complete: () => {
           console.log("RegisterComponent.onSubmit: register: complete")
         }
-      );
+      });
   }
   
   ngOnDestroy(): void {

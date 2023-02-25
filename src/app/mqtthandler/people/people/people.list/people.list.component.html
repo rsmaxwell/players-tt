@@ -1,6 +1,4 @@
 
-<cdk-virtual-scroll-viewport fxFlex="grow" [itemSize]="23" class="listViewport">
-    <div *cdkVirtualFor="let person of people" (click)="onClick(person)" fxLayout="column" class="item-1">
-        <personitem [person]="person" fxLayoutAlign="stretch" class="item-2"></personitem>
+    <div class="overflow-auto" *ngFor="let person of people" (click)="onClick(person)">
+        <personitem [person]="person"></personitem>
     </div>
-</cdk-virtual-scroll-viewport>

@@ -1,24 +1,57 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="p-2">
 
-   <mat-form-field appearance="standard" class="full-width">
-      <mat-label>Email</mat-label>
-      <input matInput [formControl]="email" type="email" required>
-      <mat-error *ngIf="email.invalid">{{getEmailErrorMessage()}}</mat-error>
-   </mat-form-field>
-
-   <mat-form-field appearance="standard" class="full-width">
-      <mat-label>Password</mat-label>
-      <input matInput [formControl]="password" [type]="hide ? 'password' : 'text'" required>
-      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-         [attr.aria-pressed]="hide">
-         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-      </button>
-      <mat-error *ngIf="password.invalid">{{getPasswordErrorMessage()}}</mat-error>
-   </mat-form-field>
-
-   <mat-card-actions>
-      <button mat-raised-button type="submit" [disabled]="!form.valid" color="primary">Signin</button>
-      <button mat-raised-button type="reset" routerLink="/account/register">Register</button>
-   </mat-card-actions>
+   <div class="flex flex-col gap-y-6 text-lg">
+      <div class="flex flex-col space-y-6 my-6">
+         <div class="">
+            <label class="">Email</label>
+            <input type="email" [formControl]="email"
+               name="email" 
+               id="email" 
+               placeholder="email@hotmail.com"
+               class="form-input border border-gray-900 py-3 px-3 bg-white placeholder-gray-400 text-gray-500 
+                  appearance-none w-full block pr-14 text-lg"
+            >
+            <div class="text-red-500" *ngIf="email.invalid">
+               {{getEmailErrorMessage()}}
+            </div>
+         </div>
+      
+         <div class="">
+            <label>Password</label>
+         
+            <div class="flex flex-row items-center space-x-2">
+            
+               <input [formControl]="password"
+                  [type]="show ? 'text' : 'password'" 
+                  name="password" 
+                  id="password" 
+                  class="form-input border border-gray-900 py-3 px-3 bg-white placeholder-gray-400 text-gray-500 
+                     appearance-none w-full block pr-14 text-lg"
+               >
+            
+               <img [src]="show ? '../assets/icons/eye-slash.svg' : '../assets/icons/eye.svg'" 
+                  width="24" 
+                  height="24"
+                  class="w-8 h-8 top-1" 
+                  viewBox="0 0 20 20"
+                  fill="currentColor" 
+                  (click)="show = !show;"
+               >
+            </div>
+            <div class="text-red-500" *ngIf="password.invalid">
+               {{getPasswordErrorMessage()}}
+            </div>
+         </div>
+      </div>
+      
+      <div class="flex flex-row space-x-2">
+         <button class="btn bg-blue-700 hover:bg-blue-700 text-white py-2 px-4 rounded">
+            Signin
+         </button>
+         <button class="btn bg-white hover:bg-blue-700 text-black hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+            Cancel
+         </button>
+      </div>
+   </div>
 
 </form>

@@ -1,29 +1,32 @@
-<div fxFlexFill fxLayout="column">
+<div class="flex flex-col h-screen bg-blue-100">
 
-   <mat-toolbar fxFlex="none" fxLayout="row" fxLayoutAlign="space-between center" color="primary">
-      <fullheader [title]="pagename"></fullheader>
-      <button mat-icon-button (click)="onClick($event)">
-         <mat-icon>add</mat-icon>
-      </button>
-   </mat-toolbar>
+   <div class="flex flex-row bg-blue-700 space-x-4 items-center">
+      <img src="../assets/icons/players.svg" class="m-2 h-14">
+      <p class="grow text-white text-3xl">{{pagename}}</p>
 
-  <div fxFlex="none">
-    <alerts></alerts>
-  </div>
+      <button (click)="onClick($event)">
+         <img src="../assets/icons/add.svg" width="24" height="24" class="m-6">
+      </button>      
+   </div>
 
-  <div fxFlex="none" class="peoplefilter">    
+   <div>
+      <alerts></alerts>
+   </div>
+
+   <div>
      <peoplefilter (filterEvent)="handleFilterEvent($event)"></peoplefilter>
   </div>
 
-   <div fxFlex="grow" class="peoplelist">    
-      <peoplelist fxFlex="grow" [filter]="filter"></peoplelist>
+   <div class="grow overflow-auto">    
+      <peoplelist [filter]="filter"></peoplelist>
    </div>
 
-   <!-- <div fxFlex="none" >
+   <div>
       <alertbuttons></alertbuttons>
-   </div> -->
+   </div>
 
-   <mat-toolbar fxFlex="nogrow" color="primary">
+   <div>
       <fullfooter></fullfooter>
-   </mat-toolbar>
+   </div>
+
 </div>

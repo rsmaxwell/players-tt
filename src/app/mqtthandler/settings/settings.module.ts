@@ -3,10 +3,8 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { SettingsPageComponent } from './settings.page/settings.page';
-import { MyMaterialModule } from 'src/app/utilities/mymaterial.module';
 import { AlertsModule } from 'src/app/alert/alerts.module';
 import { HeadersModule } from 'src/app/headers/headers.module';
 import { SettingsDetailComponent } from './settings.detail/settings.detail';
@@ -23,8 +21,6 @@ import { SettingsDetailComponent } from './settings.detail/settings.detail';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    FlexLayoutModule,
-    MyMaterialModule,
     CommonModule,
     AlertsModule,
     HeadersModule,

@@ -18,7 +18,7 @@ class RegisterResponse {
 export class SigninComponent implements OnDestroy {
 
   submitted = false;
-  hide = true;
+  show = false;
   subscription!: Subscription
 
   email = new FormControl('', [
@@ -46,16 +46,23 @@ export class SigninComponent implements OnDestroy {
 
     this.alertService.clear();
 
+    var email = this.form.value.email!
+    var password = this.form.value.password!
+
+    console.log("SigninComponent.onSubmit: email = " + email)
+    console.log("SigninComponent.onSubmit: password = " + password)
+    console.log("SigninComponent.onSubmit: this.form.invalid: " + this.form.invalid)
+
     // Stop here if form is invalid
     if (this.form.invalid) {
       return;
     }
 
-    var email = this.form.value.email
-    var password = this.form.value.password
+    console.log("SigninComponent.onSubmit (3)")
+
     this.subscription = this.accountService.signin(email, password)
-      .subscribe(
-        response => {
+      .subscribe({
+        next: (response: any) => {
           console.log("SigninComponent.onSubmit: response: " + response.payload.toString())
 
           let payload: any = JSON.parse(response.payload.toString())
@@ -70,26 +77,26 @@ export class SigninComponent implements OnDestroy {
             this.accountService.refreshToken = payload.refreshToken
             this.accountService.refreshDelta = payload.refreshDelta
             this.accountService.startRefreshTokenTimer()
-            
+
             const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-            this.router.navigateByUrl(returnUrl);            
+            this.router.navigateByUrl(returnUrl);
           } else {
             console.log("SigninComponent.onSubmit: Failed")
-            this.alertService.error(payload.message) 
+            this.alertService.error(payload.message)
             console.log("SigninComponent.onSubmit: status:       " + payload.status)
             console.log("SigninComponent.onSubmit: message:      " + payload.message)
           }
 
           this.ngOnDestroy()
         },
-        error => {
-          console.log("SigninComponent.onSubmit: error: " + JSON.stringify(error))
-          this.alertService.errorDump("Could not sign into server", error);
+        error: (err: any) => {
+          console.log("SigninComponent.onSubmit: error: " + JSON.stringify(err))
+          this.alertService.errorDump("Could not sign into server", err);
         },
-        () => {
+        complete: () => {
           console.log("SigninComponent.onSubmit: complete")
         }
-      )
+      })
   }
 
   ngOnDestroy(): void {

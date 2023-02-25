@@ -25,9 +25,12 @@ export class GamesListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+
+        console.log("games-view/list");
+
         this.subscription = this.playersService.getCourts()
-            .subscribe(
-                response => {
+            .subscribe({
+                next: (response: any) => {
                     let payload = response.payload.toString()
                     let payload2 = payload
                     if (payload.length > 100) {
@@ -40,14 +43,14 @@ export class GamesListComponent implements OnInit, OnDestroy {
                         Court.expand(court)
                     })
                 },
-                error => {
-                    console.log("GamesListComponent.ngOnInit: error: " + JSON.stringify(error))
-                    this.alertService.error(error);
+                error: (err: any) => {
+                    console.log("GamesListComponent.ngOnInit: error: " + JSON.stringify(err))
+                    this.alertService.error(err);
                 },
-                () => {
+                complete: () => {
                     console.log("GamesListComponent.ngOnInit: complete")
                 }
-            );
+            });
     }
 }
 

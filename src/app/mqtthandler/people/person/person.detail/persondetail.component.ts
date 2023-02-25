@@ -5,6 +5,7 @@ import { PlayersService } from 'src/app/service/players.service';
 import { Location } from '@angular/common';
 import { AlertService } from 'src/app/alert/alert/alert.service';
 import { Subscription } from 'rxjs';
+import { Person } from 'src/app/model/person';
 
 @Component({
   selector: 'persondetail',
@@ -107,6 +108,15 @@ export class PersonDetailComponent implements OnInit, OnDestroy {
               }
               else {
                 let person = object.person
+
+                console.log("PersonDetailComponent.ngOnInit: person.status: " + person.status)
+
+                console.log("PersonDetailComponent.ngOnInit: statuses: " + this.statuses)
+                this.statuses.forEach((item: string) => {
+                  console.log("PersonDetailComponent.ngOnInit:       " + item) 
+                });
+
+
                 this.id = person.id
 
                 delete person.id
@@ -135,9 +145,10 @@ export class PersonDetailComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.subscription_updatePerson = this.playersService.updatePerson(this.id, this.form.value)
-      .subscribe(
-        response => {
+    var value: Person = Person.fromFormGroup(this.form)
+    this.subscription_updatePerson = this.playersService.updatePerson(this.id, value)
+      .subscribe({
+        next: (response: any) => {
           let payload = response.payload.toString()
           let payload2 = payload
           if (payload.length > 100) {
@@ -159,15 +170,15 @@ export class PersonDetailComponent implements OnInit, OnDestroy {
             this.router.navigate(["app/people"])
           }
         },
-        error => {
-          console.log("PersonDetailComponent.onSubmit: error: " + JSON.stringify(error))
-          this.alertService.error(error)
+        error: (err: any) => {
+          console.log("PersonDetailComponent.onSubmit: error: " + JSON.stringify(err))
+          this.alertService.error(err)
         },
-        () => {
+        complete: () => {
           console.log("PersonDetailComponent.onSubmit: complete")
           this.router.navigate(["app/people"])
         }
-      )
+      })
   }
 
   onCancel(): void {
@@ -188,38 +199,38 @@ export class PersonDetailComponent implements OnInit, OnDestroy {
     }
 
     this.subscription_deletePerson = this.playersService.deletePerson(this.id)
-    .subscribe(
-      response => {
-        let payload = response.payload.toString()
-        let payload2 = payload
-        if (payload.length > 100) {
-          payload2 = payload.substring(0, 100) + "..."
-        }
-        console.log("PersonDetailComponent.onDelete(): response: " + payload2)
-        let object = JSON.parse(payload)
+      .subscribe({
+        next: (response: any) => {
+          let payload = response.payload.toString()
+          let payload2 = payload
+          if (payload.length > 100) {
+            payload2 = payload.substring(0, 100) + "..."
+          }
+          console.log("PersonDetailComponent.onDelete(): response: " + payload2)
+          let object = JSON.parse(payload)
 
-        if (!('status' in object)) {
-          console.log("PersonDetailComponent..onDelete(): Error: missing 'status' field in response")
-          this.alertService.error("Unexpected response from server")
-        }
-        else if (object.status != 200) {
-          console.log("PersonDetailComponent..onDelete(): Error: bad status in response")
-          this.alertService.error("Unexpected response from server")
-        }
-        else {
-          console.log("PersonDetailComponent..onDelete(): ok")
+          if (!('status' in object)) {
+            console.log("PersonDetailComponent..onDelete(): Error: missing 'status' field in response")
+            this.alertService.error("Unexpected response from server")
+          }
+          else if (object.status != 200) {
+            console.log("PersonDetailComponent..onDelete(): Error: bad status in response")
+            this.alertService.error("Unexpected response from server")
+          }
+          else {
+            console.log("PersonDetailComponent..onDelete(): ok")
+            this.router.navigate(["app/people"])
+          }
+        },
+        error: (err: any) => {
+          console.log("PersonDetailComponent..onDelete(): error: " + JSON.stringify(err))
+          this.alertService.error(err)
+        },
+        complete: () => {
+          console.log("PersonDetailComponent..onDelete(): complete")
           this.router.navigate(["app/people"])
         }
-      },
-      error => {
-        console.log("PersonDetailComponent..onDelete(): error: " + JSON.stringify(error))
-        this.alertService.error(error)
-      },
-      () => {
-        console.log("PersonDetailComponent..onDelete(): complete")
-        this.router.navigate(["app/people"])
-      }
-    )
+      })
   }
 
   getErrorMessage(formControl: FormControl) {
@@ -227,11 +238,11 @@ export class PersonDetailComponent implements OnInit, OnDestroy {
       return "This field is required";
     }
     if (formControl.hasError('minlength')) {
-      let requiredLength = formControl.errors!.minlength.requiredLength
+      let requiredLength = formControl.errors!['minlength'].requiredLength
       return "The minimum length for this field is " + String(requiredLength) + " characters.";
     }
     if (formControl.hasError('maxlength')) {
-      let requiredLength = formControl.errors!.maxlength.requiredLength
+      let requiredLength = formControl.errors!['maxlength'].requiredLength
       return "The maximum length for this field is " + String(requiredLength) + " characters.";
     }
     if (formControl.hasError('email')) {

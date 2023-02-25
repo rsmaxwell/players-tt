@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChildren, AfterViewInit, QueryList, Output } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { AlertService } from 'src/app/alert/alert/alert.service';
 import { Court } from 'src/app/model/court';
@@ -15,27 +15,35 @@ import { PositionEditComponent } from '../position/position';
 })
 export class GridEditComponent implements OnInit, AfterViewInit {
 
-    @ViewChildren(PositionEditComponent) children!: QueryList<PositionEditComponent>;
+    @ViewChildren(PositionEditComponent) positions!: QueryList<PositionEditComponent>;
     @Input() court!: Court;
-    @Input() form!: FormGroup;
 
     subscription!: Subscription
     waiters: Waiter[] = [];
 
+    @Input() formGroup2: FormGroup;
+
     constructor(
         public alertService: AlertService,
         private playersService: PlayersService,
+		private fb: FormBuilder,
         private sharedDataService: SharedDataService
     ) {
         console.log("GridEditComponent.constructor()")
+
+        this.formGroup2 = this.fb.group({
+			positions: this.fb.array([])
+		})
     }
 
     ngOnInit(): void {
-        console.log("GridEditComponent.ngOnInit(): court: " + JSON.stringify(this.court))
+        console.log("GridEditComponent.ngOnInit(1): court: " + JSON.stringify(this.court))
+
+        console.log("GridEditComponent.ngOnInit(2): positions: " + JSON.stringify(this.court.positions))
 
         this.subscription = this.playersService.getWaiters()
-            .subscribe(
-                response => {
+            .subscribe({
+                next: (response: any) => {
                     let payload = response.payload.toString()
                     let payload2 = payload
                     if (payload.length > 100) {
@@ -46,18 +54,18 @@ export class GridEditComponent implements OnInit, AfterViewInit {
                     console.log("GridEditComponent.ngOnInit: ok: waiters = " + JSON.stringify(this.waiters))
                     this.subscription.unsubscribe()
                 },
-                error => {
-                    console.log("GridEditComponent.ngOnInit: error: " + JSON.stringify(error))
-                    this.alertService.error(error);
+                error: (err: any) => {
+                    console.log("GridEditComponent.ngOnInit: error: " + JSON.stringify(err))
+                    this.alertService.error(err);
                 },
-                () => {
+                complete() {
                     console.log("GridEditComponent.ngOnInit: complete")
                 }
-            );
+        });
     }
 
     ngAfterViewInit() {
-        console.log("GridEditComponent.ngAfterViewInit(): form.value: " + JSON.stringify(this.form.value));
+        console.log("GridEditComponent.ngAfterViewInit()")       
     }
 
     ngOnDestroy(): void {

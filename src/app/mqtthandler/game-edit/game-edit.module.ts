@@ -3,9 +3,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { MyMaterialModule } from 'src/app/utilities/mymaterial.module';
 import { AlertsModule } from 'src/app/alert/alerts.module';
 import { HeadersModule } from 'src/app/headers/headers.module';
 import { GameEditPageComponent } from './page/page';
@@ -28,8 +26,6 @@ import { GridEditHeadingComponent } from './heading/heading';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    FlexLayoutModule,
-    MyMaterialModule,
     CommonModule,
     AlertsModule,
     HeadersModule,

@@ -31,14 +31,16 @@ export class AlertsComponent implements OnInit, OnDestroy {
     ) { }
 
     ngOnInit() {
+
         // subscribe to new alert notifications
         this.alertSubscription = this.alertService.onAlert(this.id)
             .subscribe(alert => {
-                
-                console.log("AlertsComponent.ngOnInit.subscribe --> alert: " + alert.message)
 
                 // clear alerts when an empty alert is received
                 if (!alert.message) {
+
+                    console.log("AlertsComponent.ngOnInit.subscribe --> clear alerts")
+
                     // filter out alerts without 'keepAfterRouteChange' flag
                     this.alerts = this.alerts.filter(x => x.keepAfterRouteChange);
 
@@ -46,6 +48,8 @@ export class AlertsComponent implements OnInit, OnDestroy {
                     this.alerts.forEach(x => delete x.keepAfterRouteChange);
                     return;
                 }
+
+                console.log("AlertsComponent.ngOnInit.subscribe --> alert: " + alert.message)
 
                 // add alert to array
                 this.alerts.push(alert);
@@ -114,10 +118,10 @@ export class AlertsComponent implements OnInit, OnDestroy {
         const classes = ['alert', 'alert-dismissable'];
 
         const alertTypeClass = {
-            [AlertType.Success]: 'alert-success',
-            [AlertType.Error]: 'alert-danger',
-            [AlertType.Info]: 'alert-info',
-            [AlertType.Warning]: 'alert-warning'
+            [AlertType.Success]: 'bg-green-500 text-white',
+            [AlertType.Error]: 'bg-red-500 text-white',
+            [AlertType.Info]: 'bg-cyan-500 text-white',
+            [AlertType.Warning]: 'bg-orange-300 text-white'
         }
 
         classes.push(alertTypeClass[alert.type!]);

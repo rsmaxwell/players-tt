@@ -19,6 +19,7 @@ export class PeoplePageComponent {
   ) { }
 
   handleFilterEvent(param: PersonFilter) {
+    console.log("PeoplePageComponent.handleFilterEvent(): filter: " + JSON.stringify(param))
     this.filter = param
   }
 

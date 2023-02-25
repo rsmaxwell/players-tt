@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FlexLayoutModule } from '@angular/flex-layout';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MyMaterialModule } from './utilities/mymaterial.module';
 import { HeadersModule } from './headers/headers.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -23,7 +22,6 @@ import { GameEditModule } from './mqtthandler/game-edit/game-edit.module';
 import { GamesViewModule } from './mqtthandler/games-view/games-view.module';
 import { SharedDataService } from './service/game.service';
 import { ViewerModule } from './mqtthandler/viewer/viewer.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   hostname: environment.mqtt.server,
@@ -33,38 +31,35 @@ const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
 };
 
 @NgModule({
-    imports: [
-        BrowserModule,
-        FormsModule,
-        FlexLayoutModule,
-        ReactiveFormsModule,
-        AppRoutingModule,
-        ScrollingModule,
-        MyMaterialModule,
-        DumpModule,
-        AlertsModule,
-        HeadersModule,
-        AuthorisationModule,
-        PeopleModule,
-        GamesViewModule,
-        WaitersModule,
-        CourtsModule,
-        HttpClientModule,
-        SettingsModule,
-        GameEditModule,
-        GamesViewModule,
-        ViewerModule,
-        MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
-        BrowserAnimationsModule
-    ],
-    declarations: [
-        AppComponent
-    ],
-    providers: [
-        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-        SharedDataService
-      ],
-    bootstrap: [AppComponent]
+  imports: [
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    ScrollingModule,
+    DumpModule,
+    AlertsModule,
+    HeadersModule,
+    AuthorisationModule,
+    PeopleModule,
+    GamesViewModule,
+    WaitersModule,
+    CourtsModule,
+    HttpClientModule,
+    SettingsModule,
+    GameEditModule,
+    GamesViewModule,
+    ViewerModule,
+    MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
+  ],
+  declarations: [
+    AppComponent
+  ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    SharedDataService
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

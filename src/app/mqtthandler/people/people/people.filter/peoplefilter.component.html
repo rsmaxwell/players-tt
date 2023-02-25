@@ -1,8 +1,6 @@
-<div class="filterContainer">
-    <mat-chip-list fxFlex="none">
-        <mat-chip class="example-box" *ngFor="let filter of filters()" [disableRipple]="true" [selected]="filter.selected"
-            (click)="select(filter)">
-            {{filter.name}}
-        </mat-chip>
-    </mat-chip-list>
-</div>
+<button (click)="select(filterButton)" *ngFor="let filterButton of allFilters()" 
+    [ngClass]="isCurrentFilter(filterButton) ?
+        'text-white bg-blue-700 font-medium rounded-lg p-2 m-1' : 
+        'text-white bg-blue-300 font-medium rounded-lg p-2 m-1'">
+    {{filterButton.name}}
+</button>

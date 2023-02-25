@@ -1,15 +1,10 @@
 
-<div fxFlexFill fxLayout="row" fxLayoutAlign="start none">
+<div class="flex items-center">
 
-    <div fxFlex="0" fxLayoutAlign="center center" class="arrow">
-        <img src="./assets/icons/arrow-fill.png" (click)="onFill(court)" />
-    </div>
+    <img src="./assets/icons/arrow-fill.svg" class="p-1 h-20" (click)="onFill(court)" />
 
-    <div fxFlex="100" fxLayoutAlign="center center">{{court.name}}
-    </div>
+    <div class="grow text-2xl text-center">{{court.name}}</div>
 
-    <div fxFlex="0" fxLayoutAlign="center center" class="arrow">
-        <img src="./assets/icons/arrow-clear.png" (click)="onClear(court)" />
-    </div>
+    <img src="./assets/icons/arrow-clear.svg" class="p-1 h-20" (click)="onClear(court)" />
 
 </div>

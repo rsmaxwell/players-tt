@@ -1,9 +1,8 @@
-﻿<div *ngFor="let alert of alerts" fxLayout="row wrap" class="{{ cssClass(alert) }}">
+﻿<div *ngFor="let alert of alerts" fxLayout="row wrap" class="flex flex-row">
 
-    <div fxFlex class="message" [innerHTML]="alert.message" (click)="showDetails(alert)"></div>
-    <!-- <div fxFlex class="message" >Hello</div> -->
+    <div class="grow {{ cssClass(alert) }}" [innerHTML]="alert.message" (click)="showDetails(alert)"></div>
 
-    <button fxFlex="nogrow" mat-button (click)="removeAlert(alert)">
-        <mat-icon>close</mat-icon>
+    <button class="nogrow {{ cssClass(alert) }}" (click)="removeAlert(alert)">
+        <img src="../assets/icons/close.svg" width="16" height="16" class="m-2">
     </button>
 </div>

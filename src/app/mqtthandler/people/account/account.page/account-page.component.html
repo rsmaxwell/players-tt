@@ -1,22 +1,24 @@
-<div fxFlexFill fxLayout="column">
+<div class="flex flex-col h-screen bg-blue-100">
 
-   <mat-toolbar fxFlex="none" fxLayout="row" fxLayoutAlign="space-between center" color="primary">
-      <fullheader [title]="pagename"></fullheader>
-   </mat-toolbar>
+   <div class="flex flex-row bg-blue-700 space-x-4 items-center">
+      <img src="../assets/icons/players.svg" class="m-2 h-14">
+      <p class="text-white text-3xl">{{pagename}}</p>     
+   </div>
 
    <div fxFlex="none">
       <alerts></alerts>
    </div>
 
-   <div fxFlex="grow" class="accountdetail">
+   <div class="grow">
       <accountdetail></accountdetail>
    </div>
 
-   <!-- <div fxFlex="none" >
+   <div class="">
       <alertbuttons></alertbuttons>
-   </div> -->
+   </div>
 
-   <mat-toolbar fxFlex="nogrow" color="primary">
+   <div class="">
       <fullfooter></fullfooter>
-   </mat-toolbar>
+   </div>
+
 </div>

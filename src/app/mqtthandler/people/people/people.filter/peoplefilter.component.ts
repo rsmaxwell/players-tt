@@ -9,38 +9,41 @@ import { PeopleFilterService } from '../people.filter.service/peoplefilter.servi
 })
 export class PeopleFilterComponent implements OnInit {
 
-  currentItem!: PersonFilter;
+  currentFilter!: PersonFilter;
 
   @Output() filterEvent = new EventEmitter<PersonFilter>();
 
   constructor(
     private peopleFilterService: PeopleFilterService
-  ) { 
-    this.currentItem = peopleFilterService.defaultFilter()
-  }
+  ) {}
 
 
   ngOnInit(): void {
-    // console.log("PeopleFilterComponent.ngOnInit: filter: " + JSON.stringify(this.currentItem)) 
+    console.log("PeopleFilterComponent.ngOnInit")
 
-    for (var filter of this.filters()) {
+    for (var filter of this.allFilters()) {
       filter.selected = false
     }
 
-    this.select(this.currentItem)
+    this.currentFilter = this.peopleFilterService.defaultFilter()
+    this.select(this.currentFilter)
+  }
+
+  isCurrentFilter(filter: PersonFilter) {
+    return (filter.id == this.currentFilter.id)
   }
 
   select(filter: PersonFilter): void {
-    // console.log("PeopleFilterComponent.select: filter: " + JSON.stringify(filter))
+    console.log("PeopleFilterComponent.select: filter: " + JSON.stringify(filter))
 
-    this.currentItem.selected = false
-    this.currentItem = filter
-    this.currentItem.selected = true
+    this.currentFilter.selected = false
+    this.currentFilter = filter
+    this.currentFilter.selected = true
 
     this.filterEvent.emit(filter)
   }
 
-  filters(): PersonFilter[] {
+  allFilters(): PersonFilter[] {
     return this.peopleFilterService.allFilters();
   }
 }

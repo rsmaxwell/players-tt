@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
 import { CourtsPageComponent } from './courts/courts.page/courts.page';
@@ -15,7 +14,6 @@ import { CourtDetailComponent } from './court/court.detail/courtdetail.component
 
 import { CreateCourtPageComponent } from './create/createcourt.page/createcourt-page.component';
 import { CreateCourtComponent } from './create/createcourt.detail/createcourt.component';
-import { MyMaterialModule } from 'src/app/utilities/mymaterial.module';
 import { AlertsModule } from 'src/app/alert/alerts.module';
 import { HeadersModule } from 'src/app/headers/headers.module';
 
@@ -37,8 +35,6 @@ import { HeadersModule } from 'src/app/headers/headers.module';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    FlexLayoutModule,
-    MyMaterialModule,
     CommonModule,
     AlertsModule,
     HeadersModule,

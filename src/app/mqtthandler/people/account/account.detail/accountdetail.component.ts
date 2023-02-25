@@ -134,9 +134,10 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
 
     var userID = this.accountService.userID
 
-    this.subscription_updatePerson = this.playersService.updatePerson(userID, this.form.value)
-      .subscribe(
-        response => {
+    var value: Person = Person.fromFormGroup(this.form)
+    this.subscription_updatePerson = this.playersService.updatePerson(userID, value)
+      .subscribe({
+        next: (response: any) => {
           let payload = response.payload.toString()
           let payload2 = payload
           if (payload.length > 100) {
@@ -158,15 +159,15 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
             this.alertService.success("Saved")
           }
         },
-        error => {
-          console.log("AccountDetailComponent.onSubmit: error: " + JSON.stringify(error))
-          this.alertService.error(error)
+        error: (err: any) => {
+          console.log("AccountDetailComponent.onSubmit: error: " + JSON.stringify(err))
+          this.alertService.error(err)
         },
-        () => {
+        complete: () => {
           console.log("AccountDetailComponent.onSubmit: complete")
           this.router.navigate(["app/people"])
         }
-      )
+      })
   }
 
   onCancel(): void {
@@ -179,11 +180,11 @@ export class AccountDetailComponent implements OnInit, OnDestroy {
       return "This field is required";
     }
     if (formControl.hasError('minlength')) {
-      let requiredLength = formControl.errors!.minlength.requiredLength
+      let requiredLength = formControl.errors!['minlength'].requiredLength
       return "The minimum length for this field is " + String(requiredLength) + " characters.";
     }
     if (formControl.hasError('maxlength')) {
-      let requiredLength = formControl.errors!.maxlength.requiredLength
+      let requiredLength = formControl.errors!['maxlength'].requiredLength
       return "The maximum length for this field is " + String(requiredLength) + " characters.";
     }
     if (formControl.hasError('email')) {

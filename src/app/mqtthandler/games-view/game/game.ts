@@ -11,7 +11,7 @@ export class GameViewComponent implements OnInit {
   @Input() court!: Court;
 
   constructor() {
-    console.log("GameViewComponent.ngOnInit()")
+    console.log("GameViewComponent.constructor()")
   }
 
   ngOnInit(): void {

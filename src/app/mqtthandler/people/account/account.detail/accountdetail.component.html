@@ -1,48 +1,101 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="p-2">
 
-    <mat-form-field appearance="standard" class="full-width">
-       <mat-label>First Name</mat-label>
-       <input matInput formControlName="firstname" type="text" required>
-       <mat-error *ngIf="firstname.invalid">{{getErrorMessage(firstname)}}</mat-error>
-    </mat-form-field>
+   <div class="flex flex-col gap-y-6 text-lg">
+      <div class="flex flex-col space-y-6 my-6">
+         <div class="">
+            <label class="">First Name</label>
+            <input type="text" [formControl]="firstname"
+               name="firstname" 
+               id="firstname" 
+               placeholder="Fred"
+               class="form-input border border-gray-900 py-3 px-3 bg-white placeholder-gray-400 text-gray-500 
+                  appearance-none w-full block pr-14 text-lg"
+            >
+            <div class="text-red-500" *ngIf="firstname.invalid">
+               {{getErrorMessage(firstname)}}
+            </div>
+         </div>
  
-    <mat-form-field appearance="standard" class="full-width">
-       <mat-label>Last Name</mat-label>
-       <input matInput formControlName="lastname" type='text' required>
-       <mat-error *ngIf="lastname.invalid">{{getErrorMessage(lastname)}}</mat-error>
-    </mat-form-field>
+         <div class="">
+            <label class="">Last Name</label>
+            <input type="text" [formControl]="firstname"
+               name="lastname" 
+               id="lastname" 
+               placeholder="Bloggs"
+               class="form-input border border-gray-900 py-3 px-3 bg-white placeholder-gray-400 text-gray-500 
+                  appearance-none w-full block pr-14 text-lg"
+            >
+            <div class="text-red-500" *ngIf="lastname.invalid">
+               {{getErrorMessage(lastname)}}
+            </div>
+         </div>
+
+         <div class="">
+            <label class="">Email</label>
+            <input type="email" [formControl]="email"
+               name="email" 
+               id="email" 
+               placeholder="fred.bloggs@hotmail.com"
+               class="form-input border border-gray-900 py-3 px-3 bg-white placeholder-gray-400 text-gray-500 
+                  appearance-none w-full block pr-14 text-lg"
+            >
+            <div class="text-red-500" *ngIf="email.invalid">
+               {{getErrorMessage(email)}}
+            </div>
+         </div>
+
+         <div class="">
+            <label class="">Knownas</label>
+            <input type="text" [formControl]="knownas"
+               name="knownas" 
+               id="knownas" 
+               placeholder="Fred"
+               class="form-input border border-gray-900 py-3 px-3 bg-white placeholder-gray-400 text-gray-500 
+                  appearance-none w-full block pr-14 text-lg"
+            >
+            <div class="text-red-500" *ngIf="knownas.invalid">
+               {{getErrorMessage(knownas)}}
+            </div>
+         </div>
  
-    <mat-form-field appearance="standard" class="full-width">
-       <mat-label>Email</mat-label>
-       <input matInput formControlName="email" type="email" required>
-       <mat-error *ngIf="email.invalid">{{getErrorMessage(email)}}</mat-error>
-    </mat-form-field>
+         <div class="">
+            <label class="">Phone</label>
+            <input type="text" [formControl]="phone"
+               name="phone" 
+               id="phone" 
+               placeholder="12345678"
+               class="form-input border border-gray-900 py-3 px-3 bg-white placeholder-gray-400 text-gray-500 
+                  appearance-none w-full block pr-14 text-lg"
+            >
+            <div class="text-red-500" *ngIf="phone.invalid">
+               {{getErrorMessage(phone)}}
+            </div>
+         </div>
  
-    <mat-form-field appearance="standard" class="full-width">
-       <mat-label>Known as</mat-label>
-       <input matInput formControlName="knownas" type="text" required>
-       <mat-error *ngIf="knownas.invalid">{{getErrorMessage(knownas)}}</mat-error>
-    </mat-form-field>
- 
-    <mat-form-field appearance="standard" class="full-width">
-       <mat-label>Phone</mat-label>
-       <input matInput formControlName="phone" type="text" required>
-       <mat-error *ngIf="phone.invalid">{{getErrorMessage(phone)}}</mat-error>
-    </mat-form-field>
- 
-    <mat-form-field appearance="standard" class="full-width">
-       <mat-label>Status</mat-label>
-       <mat-select formControlName="status" >
-         <mat-option *ngFor="let item of statuses" [value]="item" >
-           {{ item }}
-         </mat-option>
-       </mat-select>
-       <mat-error *ngIf="status.invalid">{{getErrorMessage(status)}}</mat-error>       
-    </mat-form-field>
- 
-    <mat-card-actions>
-       <button mat-raised-button type="submit" [disabled]="!form.valid" color="primary">Save</button>
-       <button mat-raised-button type="button" (click)="onCancel()" routerLink="/app/people">Cancel</button>
-    </mat-card-actions>
- 
- </form>
+         <div class="">
+            <label class="">Status</label>
+            <select class="bg-gray-50 border border-gray-900 text-gray-900 text-sm 
+               block w-full p-2.5">
+              <!-- <option selected>Open this select menu</option> -->
+              <option *ngFor="let item of statuses" [value]="item" >
+               {{ item }}
+              </option>
+            </select>
+         </div>
+      </div>
+   
+      <div class="flex flex-row space-x-2">
+         <button type="submit" 
+            class="btn bg-blue-700 text-white py-2 px-4 rounded"
+         >
+            Signin
+         </button>
+         <button type='button' (click)="onCancel()"
+            class="btn bg-white text-black py-2 px-4 rounded border border-blue-500"
+         >
+            Cancel
+         </button>
+      </div>
+   </div>
+
+</form>

@@ -35,6 +35,7 @@ export class AlertService {
     }
 
     onAlert(id = Alert.defaultId): Observable<Alert> {
+        console.log("AlertService.onAlert")
         return this.subject.asObservable().pipe(filter(x => x && x.id === id));
     }
 

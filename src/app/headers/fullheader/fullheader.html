@@ -1,28 +1,5 @@
+<div class="flex flex-row bg-blue-700 space-x-4 items-center">
+    <img src="../assets/icons/players.svg" class="m-2 h-14">
 
-<span>
-  <button mat-icon-button [matMenuTriggerFor]="menu">
-    <img src="../assets/icons/players.svg" class="myimage">    
-  </button>
-
-  <mat-menu #menu="matMenu" [overlapTrigger]="false">
-    <button mat-menu-item>
-      <mat-icon>home</mat-icon>
-      <span>Home</span>
-    </button>
-    <button mat-menu-item>
-      <mat-icon>people_outline</mat-icon>
-      <span>Connecting</span>
-    </button>
-    <button mat-menu-item>
-      <mat-icon>videocam</mat-icon>
-      <span>Let's talk</span>
-    </button>
-    <button mat-menu-item>
-      <mat-icon>exit_to_app</mat-icon>
-      <span>Logout</span>
-    </button>
-  </mat-menu>
-
-</span>
-
-<span>{{title}}</span>
+    <p class="text-white text-3xl">{{title}}</p>
+</div>

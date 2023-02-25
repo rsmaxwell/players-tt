@@ -3,12 +3,12 @@ import { AlertService } from './alert/alert/alert.service';
 import { MessageService } from './dump/service/message.service';
 
 @Component({ 
-    selector: 'app', 
+    selector: 'app-root', 
     templateUrl: 'app.component.html',
     providers: [MessageService],
 })
 export class AppComponent {
-  title = "Players"
+  title = 'Players'
   options = {
     autoClose: false,
     keepAfterRouteChange: false

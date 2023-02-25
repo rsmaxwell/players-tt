@@ -14,4 +14,38 @@ export class PersonItemComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  cssClass(name: string) {
+
+    let map = new Map([
+        ['admin', 'bg-blue-500 text-white'],
+        ['player', 'bg-white text-black'],
+        ['inactive', 'bg-white text-silver'],
+        ['suspended', 'bg-slategray text-white']
+    ])
+
+    return map.get(name);
+}  
 }
+
+
+
+// .player {
+//   color: black;
+//   background-color: white;
+// }
+// 
+// .inactive {
+//   color: silver;
+//   background-color: white;
+// }
+// 
+// .suspended {
+//   color: white;
+//   background-color: slategray;
+// } 
+// 
+// .admin {
+//   color: white;
+//   background-color: blue;  
+// }

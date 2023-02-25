@@ -1,10 +1,7 @@
-<div class="grid-edit-container">
+<div class="grid grid-cols-2 gap-2 px-2 pb-2 h-fit">
 
-    <mat-grid-list cols="2" rowHeight="fit" class="grid-edit" [gutterSize]="'10px'">
+    <div *ngFor="let position of court.positions">
+        <position-edit [position]="position" [court]="court" [waiters]="waiters" [formGroup3]="formGroup2"></position-edit>
+    </div>
 
-        <mat-grid-tile *ngFor="let position of court.positions">
-            <position-edit [position]="position" [court]="court" [waiters]="waiters" [form]="form"></position-edit>
-        </mat-grid-tile>
-
-    </mat-grid-list>
 </div>

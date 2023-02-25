@@ -58,11 +58,11 @@ export class SettingsDetailComponent implements OnInit, OnDestroy {
       return "This field is required";
     }
     if (formControl.hasError('minlength')) {
-      let requiredLength = formControl.errors!.minlength.requiredLength     
+      let requiredLength = formControl.errors!['minlength'].requiredLength     
       return "The minimum length for this field is " + String(requiredLength) + " characters.";
     }
     if (formControl.hasError('maxlength')) {
-      let requiredLength = formControl.errors!.maxlength.requiredLength     
+      let requiredLength = formControl.errors!['maxlength'].requiredLength     
       return "The maximum length for this field is " + String(requiredLength) + " characters.";
     }
 

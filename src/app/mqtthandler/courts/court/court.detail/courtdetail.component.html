@@ -1,6 +1,6 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
-    <mat-form-field appearance="standard" class="full-width">
+    <mat-form-field appearance="fill" class="full-width">
        <mat-label>Name</mat-label>
        <input matInput formControlName="name" type="text" required>
        <mat-error *ngIf="name.invalid">{{getErrorMessage(name)}}</mat-error>

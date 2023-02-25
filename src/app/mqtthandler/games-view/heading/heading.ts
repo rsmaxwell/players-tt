@@ -39,8 +39,8 @@ export class GridViewHeadingComponent implements OnInit, OnDestroy {
   onFill(court: Court): void {
     console.log("GridViewHeadingComponent.onFill");
     this.subscription_onFill = this.playersService.fillCourt(court)
-      .subscribe(
-        response => {
+      .subscribe({
+        next: (response: any) => {
           let payload = response.payload.toString()
           let payload2 = payload
           if (payload.length > 100) {
@@ -67,14 +67,14 @@ export class GridViewHeadingComponent implements OnInit, OnDestroy {
             Court.expand(court)            
           }
         },
-        error => {
-          console.log("GridViewHeadingComponent.onFill(): error: " + JSON.stringify(error))
-          this.alertService.error(error)
+        error: (err: any) => {
+          console.log("GridViewHeadingComponent.onFill(): error: " + JSON.stringify(err))
+          this.alertService.error(err)
         },
-        () => {
+        complete: () => {
           console.log("GridViewHeadingComponent.onFill(): complete")
         }
-      )
+  })
   }
 
   onClear(court: Court): void {

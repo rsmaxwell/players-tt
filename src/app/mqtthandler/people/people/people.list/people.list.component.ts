@@ -39,9 +39,11 @@ export class PeopleListComponent implements OnChanges, OnDestroy {
             this.subscription_getPeople.unsubscribe()
         }
 
+        console.log("PeopleListComponent.ngOnChanges(): this.filter: " + JSON.stringify(this.filter))
+
         this.subscription_getPeople = this.playersService.getPeople(this.filter.id)
-            .subscribe(
-                response => {
+            .subscribe({
+                next: response => {
                     let payload = response.payload.toString()
                     let payload2 = payload
                     if (payload.length > 100) {
@@ -50,14 +52,14 @@ export class PeopleListComponent implements OnChanges, OnDestroy {
                     console.log("PeopleListComponent.ngOnChanges: response: " + payload2)
                     this.people = JSON.parse(payload)
                 },
-                error => {
-                    console.log("PeopleListComponent.ngOnChanges: error: " + error)
-                    this.alertService.error(error)
+                error: err => {
+                    console.log("PeopleListComponent.ngOnChanges: error: " + err)
+                    this.alertService.error(err)
                 },
-                () => {
+                complete: () => {
                     console.log("PeopleListComponent.ngOnChanges: complete")
                 }
-            );
+            });
     }
 
     onClick(person: Person) {

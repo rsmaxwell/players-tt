@@ -1,13 +1,26 @@
 
+import { FormGroup } from "@angular/forms";
 import { Position } from "./position";
 
 
 export class Court {
-    id!: string;
-    name!: string;
-    positions: Array<Position> = [];
+    id: string;
+    name: string;
+    positions: Array<Position>;
 
-    constructor() { }
+    constructor() { 
+      this.id = ''
+      this.name = ''  
+      this.positions = []     
+    }
+
+    static fromFormGroup(form: FormGroup): Court {
+      let court = new Court()
+      court.id = form.value.id!
+      court.name = form.value.name!
+      court.positions = form.value.positions!
+      return court
+    }
 
     static expand(court: Court): void {
 
