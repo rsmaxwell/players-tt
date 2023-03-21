@@ -26,6 +26,7 @@ import { ViewerModule } from './mqtthandler/viewer/viewer.module';
 const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   hostname: environment.mqtt.server,
   port: environment.mqtt.port,
+  clean: false,
   protocol: (environment.mqtt.protocol === "wss") ? "wss" : "ws",
   path: environment.mqtt.path,
 };

@@ -2,6 +2,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { IMqttServiceOptions, MqttService } from 'ngx-mqtt';
 import { Subscription } from 'rxjs';
 import { AccountService } from 'src/app/account/account.service';
 import { AlertService } from 'src/app/alert/alert/alert.service';
@@ -41,10 +42,9 @@ export class SigninComponent implements OnDestroy {
     private alertService: AlertService
   ) { }
 
+
   onSubmit(): void {
     console.log("SigninComponent.onSubmit")
-
-    this.alertService.clear();
 
     var email = this.form.value.email!
     var password = this.form.value.password!
@@ -58,7 +58,7 @@ export class SigninComponent implements OnDestroy {
       return;
     }
 
-    console.log("SigninComponent.onSubmit (3)")
+    console.log("SigninComponent.onSubmit(entry): calling accountService.signin()")
 
     this.subscription = this.accountService.signin(email, password)
       .subscribe({
@@ -97,6 +97,8 @@ export class SigninComponent implements OnDestroy {
           console.log("SigninComponent.onSubmit: complete")
         }
       })
+
+      console.log("SigninComponent.onSubmit(exit)")
   }
 
   ngOnDestroy(): void {
